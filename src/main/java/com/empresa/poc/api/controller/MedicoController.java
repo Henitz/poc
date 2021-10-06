@@ -1,5 +1,6 @@
 package com.empresa.poc.api.controller;
 
+import com.empresa.poc.api.controller.dto.MedicoDto;
 import com.empresa.poc.api.domain.Medico;
 import com.empresa.poc.api.repository.MedicoRepository;
 import com.empresa.poc.api.service.MedicoService;
@@ -13,8 +14,15 @@ public class MedicoController {
     @Autowired
     MedicoService medicoService;
 
-    @PostMapping
-    public Medico save(@RequestBody Medico medico){
-        return medicoService.save(medico);
+    @PostMapping("/medicos")
+    public MedicoDto save(@RequestBody MedicoDto dto){
+        Medico medico =  new Medico();
+        medico.setNome(dto.getNome());
+
+        Medico medicoReturn = medicoService.save(medico);
+        MedicoDto dtoReturn =  new MedicoDto();
+        dtoReturn.setNome(medicoReturn.getNome());
+
+        return dtoReturn;
     }
 }
