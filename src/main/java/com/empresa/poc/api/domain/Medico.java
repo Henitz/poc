@@ -12,6 +12,14 @@ public class Medico {
     private Integer id;
     private String nome;
 
+    public Medico(){
+
+    }
+
+    public Medico(String nome){
+        this.nome = nome;
+    }
+
     public Integer getId() {
         return id;
     }

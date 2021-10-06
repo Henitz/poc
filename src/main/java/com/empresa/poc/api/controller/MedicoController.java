@@ -16,13 +16,9 @@ public class MedicoController {
 
     @PostMapping("/medicos")
     public MedicoDto save(@RequestBody MedicoDto dto){
-        Medico medico =  new Medico();
-        medico.setNome(dto.getNome());
 
-        Medico medicoReturn = medicoService.save(medico);
-        MedicoDto dtoReturn =  new MedicoDto();
-        dtoReturn.setNome(medicoReturn.getNome());
+        Medico medico = medicoService.save(new Medico(dto.getNome()));
 
-        return dtoReturn;
+        return new MedicoDto(medico.getNome());
     }
 }
