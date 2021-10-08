@@ -1,20 +1,23 @@
 package com.empresa.poc.api.controller;
 
 import com.empresa.poc.api.controller.dto.ConsultaDto;
+import com.empresa.poc.api.controller.dto.MedicoDto;
+import com.empresa.poc.api.controller.dto.PacienteDto;
 import com.empresa.poc.api.controller.dto.RemedioDto;
 import com.empresa.poc.api.domain.Consulta;
 import com.empresa.poc.api.domain.Remedio;
-import com.empresa.poc.api.repository.ConsultaRepository;
-import com.empresa.poc.api.repository.RemedioRepository;
 import com.empresa.poc.api.service.ConsultaService;
+import com.empresa.poc.api.service.MedicoService;
+import com.empresa.poc.api.service.PacienteService;
 import com.empresa.poc.api.service.RemedioService;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.slf4j.Logger;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 
 @RestController
@@ -29,19 +32,19 @@ public class ConsultaController {
     @Autowired
     RemedioService remedioService;
 
+    @Autowired
+    MedicoService medicoService;
+
+    @Autowired
+    PacienteService pacienteService;
+
     @PostMapping
     public ConsultaDto create(@RequestBody Consulta consulta){
-        Set<Remedio> remedios = new HashSet<>();
-        for(Remedio r : consulta.getRemedios()){
-            Optional<Remedio> optionalRemedio = remedioService.findById(r.getId());
-            if (!optionalRemedio.isPresent()) {
-                return new ConsultaDto();
-            }
-            remedios.add(optionalRemedio.get());
-        }
-        consulta.setRemedios(remedios);
+        consulta.setRemedios(getRemedioSet(consulta));
 
         Consulta saved = consultaService.save(consulta);
+        saved.setMedico(medicoService.findById(saved.getMedico().getId()));
+        saved.setPaciente(pacienteService.findById(saved.getPaciente().getId()));
 
         return toDto(saved);
     }
@@ -49,19 +52,24 @@ public class ConsultaController {
     @GetMapping
     public Set<ConsultaDto> getAll(){
         Set<Consulta> consultas = consultaService.findAll();
-
-
         for(Consulta c : consultas){
-            Set<Remedio> remedios = new HashSet<>();
-            for (Remedio r : c.getRemedios()){
-                Optional<Remedio> optionalRemedio = remedioService.findById(r.getId());
-                remedios.add(optionalRemedio.get());
-            }
-            c.setRemedios(remedios);
+            c.setRemedios(getRemedioSet(c));
             consultas.add(c);
         }
 
         return toSetDto(consultas);
+    }
+
+    private Set<Remedio> getRemedioSet(Consulta c) {
+        Set<Remedio> remedios = new HashSet<>();
+        for (Remedio r : c.getRemedios()){
+            Optional<Remedio> optionalRemedio = remedioService.findById(r.getId());
+            if (!optionalRemedio.isPresent()) {
+                return new HashSet<>();
+            }
+            remedios.add(optionalRemedio.get());
+        }
+        return remedios;
     }
 
     private ConsultaDto toDto(Consulta consulta){
@@ -75,8 +83,10 @@ public class ConsultaController {
             rDto.setNome(r.getNome());
             remediosDto.add(rDto);
         }
-        consultaDto.setRemedios(remediosDto);
         consultaDto.setId(consulta.getId());
+        consultaDto.setMedico(new MedicoDto(consulta.getMedico()));
+        consultaDto.setPaciente(new PacienteDto(consulta.getPaciente()));
+        consultaDto.setRemedios(remediosDto);
         return consultaDto;
     }
 

@@ -1,9 +1,7 @@
 package com.empresa.poc.api.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Paciente {
@@ -12,6 +10,12 @@ public class Paciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+
+    @OneToMany(mappedBy = "paciente")
+    private Set<Consulta> consultas;
+
+    public Paciente(){
+    }
 
     public Integer getId() {
         return id;
@@ -27,6 +31,14 @@ public class Paciente {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Set<Consulta> getConsulta() {
+        return consultas;
+    }
+
+    public void setConsulta(Set<Consulta> consultas) {
+        this.consultas = consultas;
     }
 
 

@@ -1,11 +1,8 @@
 package com.empresa.poc.api.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,6 +11,12 @@ public class Consulta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @ManyToOne
+    private Medico medico;
+
+    @ManyToOne
+    private Paciente paciente;
 
     @ManyToMany
     @JoinTable(
@@ -40,5 +43,21 @@ public class Consulta {
 
     public void setRemedios(Set<Remedio> remedios) {
         this.remedios = remedios;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 }

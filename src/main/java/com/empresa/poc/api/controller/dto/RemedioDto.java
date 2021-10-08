@@ -1,11 +1,5 @@
 package com.empresa.poc.api.controller.dto;
 
-import com.empresa.poc.api.domain.Consulta;
-
-import java.util.HashSet;
-import java.util.Set;
-
-
 public class RemedioDto {
 
 

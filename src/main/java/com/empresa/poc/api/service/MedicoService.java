@@ -14,4 +14,6 @@ public class MedicoService {
     public Medico save(Medico medico){
         return medicoRepository.save(medico);
     }
+
+    public Medico findById(Integer id) { return medicoRepository.findById(id).get(); }
 }

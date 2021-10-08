@@ -1,10 +1,7 @@
 package com.empresa.poc.api.controller;
 
-import com.empresa.poc.api.controller.dto.MedicoDto;
 import com.empresa.poc.api.controller.dto.PacienteDto;
-import com.empresa.poc.api.domain.Medico;
 import com.empresa.poc.api.domain.Paciente;
-import com.empresa.poc.api.service.MedicoService;
 import com.empresa.poc.api.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
