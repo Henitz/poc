@@ -60,6 +60,11 @@ public class ConsultaController {
         return toSetDto(consultas);
     }
 
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable Integer id){
+        consultaService.delete(id);
+    }
+
     private Set<Remedio> getRemedioSet(Consulta c) {
         Set<Remedio> remedios = new HashSet<>();
         for (Remedio r : c.getRemedios()){

@@ -20,4 +20,6 @@ public class ConsultaService {
     public Set<Consulta> findAll(){
         return consultaRepository.findAll();
     }
+
+    public void delete(Integer id) { consultaRepository.deleteById(id); }
 }
