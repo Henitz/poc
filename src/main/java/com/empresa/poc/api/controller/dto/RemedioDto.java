@@ -1,7 +1,29 @@
 package com.empresa.poc.api.controller.dto;
 
+import com.empresa.poc.api.domain.Consulta;
+
+import java.util.HashSet;
+import java.util.Set;
+
+
 public class RemedioDto {
+
+
+    private Integer id;
     private String nome;
+
+
+    public RemedioDto(){
+
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -10,4 +32,6 @@ public class RemedioDto {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+
 }

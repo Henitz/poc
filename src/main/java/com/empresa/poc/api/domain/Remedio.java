@@ -1,11 +1,24 @@
 package com.empresa.poc.api.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 public class Remedio {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String nome;
+
+    @ManyToMany(mappedBy = "remedios")
+    private Set<Consulta> consultas = new HashSet<>();
+
+    public Remedio(){
+
+    }
+
     public Integer getId() {
         return id;
     }
@@ -22,8 +35,11 @@ public class Remedio {
         this.nome = nome;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String nome;
+    public Set<Consulta> getConsultas() {
+        return consultas;
+    }
+
+    public void setConsultas(Set<Consulta> consultas) {
+        this.consultas = consultas;
+    }
 }
