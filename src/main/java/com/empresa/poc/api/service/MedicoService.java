@@ -10,8 +10,11 @@ public class MedicoService {
 
     @Autowired
     MedicoRepository medicoRepository;
+    public Medico findById(Integer id) {
+        return medicoRepository.findById(id).get();
+    }
 
-    public Medico save(Medico medico){
+    public Medico save(Medico medico) {
         return medicoRepository.save(medico);
     }
 }

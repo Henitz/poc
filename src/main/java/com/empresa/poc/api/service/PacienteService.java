@@ -13,6 +13,10 @@ public class PacienteService {
     @Autowired
     PacienteRepository pacienteRepository;
 
+    public Paciente findById(Integer id) {
+        return pacienteRepository.findById(id).get();
+    }
+
     public Paciente save(Paciente paciente){
         return pacienteRepository.save(paciente);
     }
