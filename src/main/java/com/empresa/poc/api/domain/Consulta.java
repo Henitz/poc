@@ -27,6 +27,10 @@ public class Consulta {
     private Paciente paciente;
 
 
+//    @ManyToOne
+//    @JoinColumn(name = "plano_de_saude_id")
+//    private PlanoDeSaude planodesaude;
+
     public Consulta(){
 
     }
@@ -62,4 +66,12 @@ public class Consulta {
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
+
+//    public PlanoDeSaude getPlanodesaude() {
+//        return planodesaude;
+//    }
+//
+//    public void setPlanodesaude(PlanoDeSaude planodesaude) {
+//        this.planodesaude = planodesaude;
+//    }
 }

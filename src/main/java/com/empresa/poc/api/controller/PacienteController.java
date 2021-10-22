@@ -23,10 +23,13 @@ public class PacienteController {
     public PacienteDto save(@RequestBody PacienteDto dto) {
         Paciente paciente = new Paciente();
         paciente.setNome(dto.getNome());
+        paciente.setPlanodesaude(dto.getPlanodesaude());
+
 
         Paciente pacienteReturn = pacienteService.save(paciente);
         PacienteDto dtoReturn = new PacienteDto();
         dtoReturn.setNome(pacienteReturn.getNome());
+        dtoReturn.setPlanodesaude(pacienteReturn.getPlanodesaude());
 
         return dtoReturn;
     }

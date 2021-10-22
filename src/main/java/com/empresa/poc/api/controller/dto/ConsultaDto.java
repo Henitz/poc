@@ -2,6 +2,7 @@ package com.empresa.poc.api.controller.dto;
 
 import com.empresa.poc.api.domain.Medico;
 import com.empresa.poc.api.domain.Paciente;
+import com.empresa.poc.api.domain.PlanoDeSaude;
 
 
 import java.util.Date;
@@ -12,6 +13,7 @@ public class ConsultaDto {
     private Date data;
     public Medico medico;
     public Paciente paciente;
+
 
     public ConsultaDto() {
 
@@ -55,4 +57,6 @@ public class ConsultaDto {
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
+
+
 }

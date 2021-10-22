@@ -1,9 +1,6 @@
 package com.empresa.poc.api.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Paciente {
@@ -12,6 +9,9 @@ public class Paciente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+
+    @Enumerated(EnumType.ORDINAL)
+    private PlanoDeSaude planodesaude;
 
     public Integer getId() {
         return id;
@@ -29,5 +29,11 @@ public class Paciente {
         this.nome = nome;
     }
 
+    public PlanoDeSaude getPlanodesaude() {
+        return planodesaude;
+    }
 
+    public void setPlanodesaude(PlanoDeSaude planodesaude) {
+        this.planodesaude = planodesaude;
+    }
 }
