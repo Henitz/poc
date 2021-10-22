@@ -42,19 +42,21 @@ public class ConsultaController {
         ConsultaDto dtoReturn = new ConsultaDto();
         dtoReturn.setId(consultaReturn.getId());
         dtoReturn.setData(consultaReturn.getData());
-    //    dtoReturn.setPlanodesaude(consultaReturn.getPlanodesaude());
+
 
 
         Medico medico = new Medico();
         medico.setId(medicoService.findById(consultaReturn.getMedico().getId()).getId());
         medico.setNome(medicoService.findById(consultaReturn.getMedico().getId()).getNome());
+        medico.setEspecialidade(medicoService.findById(consultaReturn.getMedico().getId()).getEspecialidade());
+
         dtoReturn.setMedico(medico);
+
 
         Paciente paciente = new Paciente();
         paciente.setId(pacienteService.findById(consultaReturn.getPaciente().getId()).getId());
         paciente.setNome(pacienteService.findById(consultaReturn.getPaciente().getId()).getNome());
         paciente.setPlanodesaude(pacienteService.findById(consultaReturn.getPaciente().getId()).getPlanodesaude());
-     //   paciente.setPlanodesaude(pacienteService.);
 
         dtoReturn.setPaciente(paciente);
 

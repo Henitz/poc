@@ -10,6 +10,9 @@ public class Medico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
+
+    @Enumerated(EnumType.ORDINAL)
+    private Especialidade especialidade;
     
     public Medico(){}
 
@@ -31,5 +34,13 @@ public class Medico {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Especialidade getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(Especialidade especialidade) {
+        this.especialidade = especialidade;
     }
 }

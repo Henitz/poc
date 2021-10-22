@@ -27,9 +27,7 @@ public class Consulta {
     private Paciente paciente;
 
 
-//    @ManyToOne
-//    @JoinColumn(name = "plano_de_saude_id")
- //   private PlanoDeSaude planodesaude;
+
 
     public Consulta(){
 
