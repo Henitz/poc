@@ -34,6 +34,7 @@ public class ConsultaController {
         consulta.setData(dto.getData());
         consulta.setMedico(dto.getMedico());
         consulta.setPaciente(dto.getPaciente());
+//        consulta.setPlanodesaude(dto.getPlanodesaude());
 
 
 
@@ -41,6 +42,7 @@ public class ConsultaController {
         ConsultaDto dtoReturn = new ConsultaDto();
         dtoReturn.setId(consultaReturn.getId());
         dtoReturn.setData(consultaReturn.getData());
+    //    dtoReturn.setPlanodesaude(consultaReturn.getPlanodesaude());
 
 
         Medico medico = new Medico();
@@ -51,7 +53,9 @@ public class ConsultaController {
         Paciente paciente = new Paciente();
         paciente.setId(pacienteService.findById(consultaReturn.getPaciente().getId()).getId());
         paciente.setNome(pacienteService.findById(consultaReturn.getPaciente().getId()).getNome());
-       // paciente.setPlanodesaude(planodesaudeService.);
+        paciente.setPlanodesaude(pacienteService.findById(consultaReturn.getPaciente().getId()).getPlanodesaude());
+     //   paciente.setPlanodesaude(pacienteService.);
+
         dtoReturn.setPaciente(paciente);
 
 
