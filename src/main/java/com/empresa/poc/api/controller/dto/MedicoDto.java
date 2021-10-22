@@ -3,7 +3,7 @@ package com.empresa.poc.api.controller.dto;
 import com.empresa.poc.api.domain.Especialidade;
 
 public class MedicoDto {
-
+    private Integer id;
     private String nome;
     private Especialidade especialidade;
 
@@ -30,4 +30,13 @@ public class MedicoDto {
     public void setEspecialidade(Especialidade especialidade) {
         this.especialidade = especialidade;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }
+

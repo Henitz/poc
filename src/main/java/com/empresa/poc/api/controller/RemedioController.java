@@ -8,19 +8,16 @@ import com.empresa.poc.api.domain.Remedio;
 import com.empresa.poc.api.service.PacienteService;
 import com.empresa.poc.api.service.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("/remedios")
 public class RemedioController {
 
     @Autowired
     RemedioService remedioService;
 
-    @PostMapping("/remedios")
+    @PostMapping
     public RemedioDto save(@RequestBody RemedioDto dto) {
         Remedio remedio = new Remedio();
         remedio.setNome(dto.getNome());
@@ -30,5 +27,15 @@ public class RemedioController {
         dtoReturn.setNome(remedioReturn.getNome());
 
         return dtoReturn;
+    }
+    @GetMapping("/{id}")
+    public RemedioDto one(@PathVariable Integer id) {
+
+        Remedio saved = remedioService.findById(id);
+
+        RemedioDto dto = new RemedioDto();
+        dto.setNome(saved.getNome());
+
+        return dto;
     }
 }

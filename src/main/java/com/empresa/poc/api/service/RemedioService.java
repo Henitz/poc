@@ -11,4 +11,8 @@ public class RemedioService {
     RemedioRepository remedioRepository;
 
     public Remedio save(Remedio remedio) {return remedioRepository.save(remedio);}
+
+    public Remedio findById(Integer id) {
+        return remedioRepository.findById(id).get();
+    }
 }

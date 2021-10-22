@@ -3,8 +3,18 @@ package com.empresa.poc.api.controller.dto;
 import com.empresa.poc.api.domain.PlanoDeSaude;
 
 public class PacienteDto {
+
+    private Integer id;
     private String nome;
     private PlanoDeSaude planodesaude;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;

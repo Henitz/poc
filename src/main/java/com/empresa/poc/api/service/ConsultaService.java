@@ -14,4 +14,8 @@ public class ConsultaService {
     public Consulta save(Consulta consulta){
         return consultaRepository.save(consulta);
     }
+
+    public Consulta findById(Integer id) {
+        return consultaRepository.findById(id).get();
+    }
 }

@@ -11,8 +11,8 @@ public class ConsultaDto {
 
     private Integer id;
     private Date data;
-    public Medico medico;
-    public Paciente paciente;
+    public MedicoDto medico;
+    public PacienteDto paciente;
 
 
 
@@ -42,20 +42,20 @@ public class ConsultaDto {
         this.data = data;
     }
 
-    public Medico getMedico() {
+    public MedicoDto getMedico() {
         return medico;
     }
 
-    public void setMedico(Medico medico) {
+    public void setMedico(MedicoDto medico) {
         this.medico = medico;
     }
 
 
-    public Paciente getPaciente() {
+    public PacienteDto getPaciente() {
         return paciente;
     }
 
-    public void setPaciente(Paciente paciente) {
+    public void setPaciente(PacienteDto paciente) {
         this.paciente = paciente;
     }
 
