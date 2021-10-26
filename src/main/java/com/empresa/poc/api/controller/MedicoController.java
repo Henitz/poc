@@ -75,5 +75,20 @@ public class MedicoController {
         return new MedicoDto();
 
     }
-    
+
+    @PutMapping("/{id}")
+    public MedicoDto alterar(@RequestBody MedicoDto dto, @PathVariable int id) {
+        Medico medico = new Medico();
+        medico.setId(id);
+        medico.setNome(dto.getNome());
+        medico.setEspecialidade(dto.getEspecialidade());
+
+        Medico medicoReturn = medicoService.save(medico);
+        MedicoDto dtoReturn = new MedicoDto();
+        dtoReturn.setId(medicoReturn.getId());
+        dtoReturn.setNome(medicoReturn.getNome());
+        dtoReturn.setEspecialidade(medicoReturn.getEspecialidade());
+
+        return dtoReturn;
+    }
 }
