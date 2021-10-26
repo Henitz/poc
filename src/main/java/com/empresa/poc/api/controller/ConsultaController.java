@@ -12,6 +12,8 @@ import com.empresa.poc.api.service.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -91,5 +93,23 @@ public class ConsultaController {
 
         return consultaDto;
     }
+    @GetMapping
+    public List<ConsultaDto> todos() {
 
+        List<Consulta> consultas = consultaService.findAll();
+        List<ConsultaDto> consultasDto = new ArrayList<>();
+
+        for (Consulta consulta : consultas) {
+
+            ConsultaDto consultaDto = new ConsultaDto();
+            consultaDto.setId(consulta.getId());
+            consultaDto.setData(consulta.getData());
+
+
+            consultasDto.add(consultaDto);
+
+        }
+
+        return consultasDto;
+    }
 }

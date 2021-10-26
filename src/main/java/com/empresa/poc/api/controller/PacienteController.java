@@ -1,10 +1,15 @@
 package com.empresa.poc.api.controller;
 
+import com.empresa.poc.api.controller.dto.MedicoDto;
 import com.empresa.poc.api.controller.dto.PacienteDto;
+import com.empresa.poc.api.domain.Medico;
 import com.empresa.poc.api.domain.Paciente;
 import com.empresa.poc.api.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/pacientes")
@@ -42,4 +47,25 @@ public class PacienteController {
 
         return dto;
     }
+
+    @GetMapping
+    public List<PacienteDto> todos() {
+
+        List<Paciente> pacientes = pacienteService.findAll();
+        List<PacienteDto> pacientesDto = new ArrayList<>();
+
+        for (Paciente paciente : pacientes) {
+
+            PacienteDto pacienteDto = new PacienteDto();
+            pacienteDto.setId(paciente.getId());
+            pacienteDto.setNome(paciente.getNome());
+            pacienteDto.setPlanoDeSaude(paciente.getPlanoDeSaude());
+
+            pacientesDto.add(pacienteDto);
+
+        }
+
+        return pacientesDto;
+    }
+
 }

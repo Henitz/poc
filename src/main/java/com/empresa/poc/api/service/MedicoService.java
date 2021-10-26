@@ -20,8 +20,19 @@ public class MedicoService {
     public Medico save(Medico medico) {
 
         //TODO Criar um switch case para todas as especialidades
-        if(medico.getEspecialidade().name().equals("ORTOPEDISTA")){
-            medico.setSalario(20000.0);
+//        if(medico.getEspecialidade().name().equals("ORTOPEDISTA")){
+//            medico.setSalario(20000.0);
+//        }
+
+        switch(medico.getEspecialidade().name()) {
+            case "ORTOPEDISTA":
+                medico.setSalario(20000.0);
+
+            case "CLINICO_GERAL":
+                medico.setSalario(30000.0);
+
+            case "NEUROLOGISTA":
+                medico.setSalario(35000.0);
         }
 
         return medicoRepository.save(medico);

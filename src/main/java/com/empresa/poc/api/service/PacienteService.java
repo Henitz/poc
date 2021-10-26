@@ -7,6 +7,8 @@ import com.empresa.poc.api.repository.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PacienteService {
 
@@ -21,5 +23,9 @@ public class PacienteService {
         return pacienteRepository.save(paciente);
     }
 
+    public List<Paciente> findAll(){
+
+        return (List<Paciente>) pacienteRepository.findAll();
+    }
 
 }
