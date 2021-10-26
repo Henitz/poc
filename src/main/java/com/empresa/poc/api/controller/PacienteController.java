@@ -1,16 +1,14 @@
 package com.empresa.poc.api.controller;
 
-import com.empresa.poc.api.controller.dto.MedicoDto;
 import com.empresa.poc.api.controller.dto.PacienteDto;
-import com.empresa.poc.api.domain.Medico;
 import com.empresa.poc.api.domain.Paciente;
-import com.empresa.poc.api.service.MedicoService;
 import com.empresa.poc.api.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/pacientes")
+@CrossOrigin("*")
 public class PacienteController {
 
     @Autowired
@@ -20,14 +18,14 @@ public class PacienteController {
     public PacienteDto save(@RequestBody PacienteDto dto) {
         Paciente paciente = new Paciente();
         paciente.setNome(dto.getNome());
-        paciente.setPlanodesaude(dto.getPlanodesaude());
+        paciente.setPlanoDeSaude(dto.getPlanoDeSaude());
 
 
         Paciente pacienteReturn = pacienteService.save(paciente);
         PacienteDto dtoReturn = new PacienteDto();
         dtoReturn.setId(pacienteReturn.getId());
         dtoReturn.setNome(pacienteReturn.getNome());
-        dtoReturn.setPlanodesaude(pacienteReturn.getPlanodesaude());
+        dtoReturn.setPlanoDeSaude(pacienteReturn.getPlanoDeSaude());
 
         return dtoReturn;
     }
@@ -38,8 +36,9 @@ public class PacienteController {
         Paciente saved = pacienteService.findById(id);
 
         PacienteDto dto = new PacienteDto();
+        dto.setId(saved.getId());
         dto.setNome(saved.getNome());
-        dto.setPlanodesaude(saved.getPlanodesaude());
+        dto.setPlanoDeSaude(saved.getPlanoDeSaude());
 
         return dto;
     }

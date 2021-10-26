@@ -6,7 +6,7 @@ public class PacienteDto {
 
     private Integer id;
     private String nome;
-    private PlanoDeSaude planodesaude;
+    private PlanoDeSaude planoDeSaude;
 
     public Integer getId() {
         return id;
@@ -24,11 +24,11 @@ public class PacienteDto {
         this.nome = nome;
     }
 
-    public PlanoDeSaude getPlanodesaude() {
-        return planodesaude;
+    public PlanoDeSaude getPlanoDeSaude() {
+        return planoDeSaude;
     }
 
-    public void setPlanodesaude(PlanoDeSaude planodesaude) {
-        this.planodesaude = planodesaude;
+    public void setPlanoDeSaude(PlanoDeSaude planoDeSaude) {
+        this.planoDeSaude = planoDeSaude;
     }
 }

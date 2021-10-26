@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/remedios")
+@CrossOrigin("*")
 public class RemedioController {
 
     @Autowired
@@ -24,6 +25,7 @@ public class RemedioController {
 
         Remedio remedioReturn = remedioService.save(remedio);
         RemedioDto dtoReturn = new RemedioDto();
+        dtoReturn.setId(remedioReturn.getId());
         dtoReturn.setNome(remedioReturn.getNome());
 
         return dtoReturn;
@@ -34,6 +36,7 @@ public class RemedioController {
         Remedio saved = remedioService.findById(id);
 
         RemedioDto dto = new RemedioDto();
+        dto.setId(saved.getId());
         dto.setNome(saved.getNome());
 
         return dto;

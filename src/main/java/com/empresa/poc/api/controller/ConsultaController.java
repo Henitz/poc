@@ -3,7 +3,6 @@ package com.empresa.poc.api.controller;
 import com.empresa.poc.api.controller.dto.ConsultaDto;
 import com.empresa.poc.api.controller.dto.MedicoDto;
 import com.empresa.poc.api.controller.dto.PacienteDto;
-import com.empresa.poc.api.controller.dto.RemedioDto;
 import com.empresa.poc.api.domain.*;
 import com.empresa.poc.api.service.ConsultaService;
 import com.empresa.poc.api.service.MedicoService;
@@ -13,8 +12,11 @@ import com.empresa.poc.api.service.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/consultas")
+@CrossOrigin("*")
 public class ConsultaController {
 
     @Autowired
@@ -31,36 +33,37 @@ public class ConsultaController {
         Consulta consulta = new Consulta();
         //consulta.setId(dto.getId());
         consulta.setData(dto.getData());
+        if(!(Objects.isNull(dto.getMedico()) || Objects.isNull(dto.getPaciente()))) {
+            Medico medico = new Medico();
+            medico.setId(dto.getMedico().getId());
+            medico.setNome(dto.getMedico().getNome());
+            medico.setEspecialidade(dto.getMedico().getEspecialidade());
+            consulta.setMedico(medico);
 
-        Medico medico = new Medico();
-        medico.setId(dto.getMedico().getId());
-        medico.setNome(dto.getMedico().getNome());
-        medico.setEspecialidade(dto.getMedico().getEspecialidade());
-        consulta.setMedico(medico);
-
-        Paciente paciente = new Paciente();
-        paciente.setId(dto.getPaciente().getId());
-        paciente.setNome(dto.getPaciente().getNome());
-        paciente.setPlanodesaude(dto.getPaciente().getPlanodesaude());
-        consulta.setPaciente(paciente);
-
+            Paciente paciente = new Paciente();
+            paciente.setId(dto.getPaciente().getId());
+            paciente.setNome(dto.getPaciente().getNome());
+            paciente.setPlanoDeSaude(dto.getPaciente().getPlanoDeSaude());
+            consulta.setPaciente(paciente);
+        }
         Consulta consultaReturn = consultaService.save(consulta);
         ConsultaDto dtoReturn = new ConsultaDto();
         dtoReturn.setId(consultaReturn.getId());
         dtoReturn.setData(consultaReturn.getData());
 
-        MedicoDto medicoDto = new MedicoDto();
-        medicoDto.setId(medicoService.findById(consultaReturn.getMedico().getId()).getId());
-        medicoDto.setNome(medicoService.findById(consultaReturn.getMedico().getId()).getNome());
-        medicoDto.setEspecialidade(medicoService.findById(consultaReturn.getMedico().getId()).getEspecialidade());
-        dtoReturn.setMedico(medicoDto);
+        if(!(Objects.isNull(dto.getMedico()) || Objects.isNull(dto.getPaciente()))) {
+            MedicoDto medicoDto = new MedicoDto();
+            medicoDto.setId(medicoService.findById(consultaReturn.getMedico().getId()).getId());
+            medicoDto.setNome(medicoService.findById(consultaReturn.getMedico().getId()).getNome());
+            medicoDto.setEspecialidade(medicoService.findById(consultaReturn.getMedico().getId()).getEspecialidade());
+            dtoReturn.setMedico(medicoDto);
 
-        PacienteDto pacienteDto = new PacienteDto();
-        pacienteDto.setId(pacienteService.findById(consultaReturn.getPaciente().getId()).getId());
-        pacienteDto.setNome(pacienteService.findById(consultaReturn.getPaciente().getId()).getNome());
-        pacienteDto.setPlanodesaude(pacienteService.findById(consultaReturn.getPaciente().getId()).getPlanodesaude());
-        dtoReturn.setPaciente(pacienteDto);
-
+            PacienteDto pacienteDto = new PacienteDto();
+            pacienteDto.setId(pacienteService.findById(consultaReturn.getPaciente().getId()).getId());
+            pacienteDto.setNome(pacienteService.findById(consultaReturn.getPaciente().getId()).getNome());
+            pacienteDto.setPlanoDeSaude(pacienteService.findById(consultaReturn.getPaciente().getId()).getPlanoDeSaude());
+            dtoReturn.setPaciente(pacienteDto);
+        }
         return dtoReturn;
     }
 
@@ -83,7 +86,7 @@ public class ConsultaController {
         PacienteDto pacienteDto = new PacienteDto();
         pacienteDto.setId(pacienteSaved.getId());
         pacienteDto.setNome(pacienteSaved.getNome());
-        pacienteDto.setPlanodesaude(pacienteSaved.getPlanodesaude());
+        pacienteDto.setPlanoDeSaude(pacienteSaved.getPlanoDeSaude());
         consultaDto.setPaciente(pacienteDto);
 
         return consultaDto;

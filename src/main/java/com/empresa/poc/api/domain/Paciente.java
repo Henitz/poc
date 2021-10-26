@@ -5,13 +5,15 @@ import javax.persistence.*;
 @Entity
 public class Paciente {
 
+    public Paciente(){ }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
 
     @Enumerated(EnumType.ORDINAL)
-    private PlanoDeSaude planodesaude;
+    private PlanoDeSaude planoDeSaude;
 
     public Integer getId() {
         return id;
@@ -29,11 +31,11 @@ public class Paciente {
         this.nome = nome;
     }
 
-    public PlanoDeSaude getPlanodesaude() {
-        return planodesaude;
+    public PlanoDeSaude getPlanoDeSaude() {
+        return planoDeSaude;
     }
 
-    public void setPlanodesaude(PlanoDeSaude planodesaude) {
-        this.planodesaude = planodesaude;
+    public void setPlanoDeSaude(PlanoDeSaude planoDeSaude) {
+        this.planoDeSaude = planoDeSaude;
     }
 }

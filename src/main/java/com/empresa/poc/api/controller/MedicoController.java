@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/medicos")
+@CrossOrigin("*")
 public class MedicoController {
 
     private MedicoRepository medicoRepository;
@@ -49,6 +50,16 @@ public class MedicoController {
 
 //    @GetMapping
 //    public List<MedicoDto> todos() {
-//        return (List<MedicoDto>) medicoRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+//
+//        Medico medicoReturn = medicoService.findById(id);
+//        MedicoDto dtoReturn = new MedicoDto();
+//        dtoReturn.setId(medicoReturn.getId());
+//        dtoReturn.setNome(medicoReturn.getNome());
+//        dtoReturn.setEspecialidade(medicoReturn.getEspecialidade());
+//
+//
+//
+//
+//        return (List<dtoReturn>) MedicoRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
 //    }
 }
