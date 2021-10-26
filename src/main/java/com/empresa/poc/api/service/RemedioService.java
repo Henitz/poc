@@ -24,4 +24,10 @@ public class RemedioService {
         return (List<Remedio>) remedioRepository.findAll();
     }
 
+    public Remedio deleteById(Integer id) {
+
+        remedioRepository.deleteById(id);
+        return new Remedio();
+    }
+
 }

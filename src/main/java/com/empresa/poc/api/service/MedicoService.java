@@ -24,7 +24,7 @@ public class MedicoService {
 //            medico.setSalario(20000.0);
 //        }
 
-        switch(medico.getEspecialidade().name()) {
+        switch (medico.getEspecialidade().name()) {
             case "ORTOPEDISTA":
                 medico.setSalario(20000.0);
 
@@ -38,8 +38,14 @@ public class MedicoService {
         return medicoRepository.save(medico);
     }
 
-    public List<Medico> findAll(){
+    public List<Medico> findAll() {
 
         return (List<Medico>) medicoRepository.findAll();
+    }
+
+    public Medico deleteById(Integer id) {
+
+        medicoRepository.deleteById(id);
+        return new Medico();
     }
 }

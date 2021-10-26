@@ -26,4 +26,10 @@ public class ConsultaService {
 
         return (List<Consulta>) consultaRepository.findAll();
     }
+
+    public Consulta deleteById(Integer id) {
+
+        consultaRepository.deleteById(id);
+        return new Consulta();
+    }
 }

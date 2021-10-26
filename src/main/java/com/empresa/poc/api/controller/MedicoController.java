@@ -67,4 +67,13 @@ public class MedicoController {
         return medicosDto;
     }
 
+    @DeleteMapping("/{id}")
+    public MedicoDto delete(@PathVariable Integer id) {
+
+        medicoService.deleteById(id);
+
+        return new MedicoDto();
+
+    }
+    
 }

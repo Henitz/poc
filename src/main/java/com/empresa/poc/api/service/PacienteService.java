@@ -19,13 +19,18 @@ public class PacienteService {
         return pacienteRepository.findById(id).get();
     }
 
-    public Paciente save(Paciente paciente){
+    public Paciente save(Paciente paciente) {
         return pacienteRepository.save(paciente);
     }
 
-    public List<Paciente> findAll(){
+    public List<Paciente> findAll() {
 
         return (List<Paciente>) pacienteRepository.findAll();
     }
 
+    public Paciente deleteById(Integer id) {
+
+        pacienteRepository.deleteById(id);
+        return new Paciente();
+    }
 }

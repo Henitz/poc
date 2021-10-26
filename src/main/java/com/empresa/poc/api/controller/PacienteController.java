@@ -68,4 +68,13 @@ public class PacienteController {
         return pacientesDto;
     }
 
+    @DeleteMapping("/{id}")
+    public PacienteDto delete(@PathVariable Integer id) {
+
+        pacienteService.deleteById(id);
+
+        return new PacienteDto();
+
+    }
+
 }

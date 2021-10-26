@@ -112,4 +112,14 @@ public class ConsultaController {
 
         return consultasDto;
     }
+
+    @DeleteMapping("/{id}")
+    public ConsultaDto delete(@PathVariable Integer id) {
+
+        consultaService.deleteById(id);
+
+        return new ConsultaDto();
+
+    }
+
 }

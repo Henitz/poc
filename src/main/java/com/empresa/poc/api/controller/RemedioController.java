@@ -66,4 +66,13 @@ public class RemedioController {
 
         return remediosDto;
     }
+
+    @DeleteMapping("/{id}")
+    public RemedioDto delete(@PathVariable Integer id) {
+
+        remedioService.deleteById(id);
+
+        return new RemedioDto();
+
+    }
 }
