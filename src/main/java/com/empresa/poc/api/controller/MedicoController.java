@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,10 +16,8 @@ import java.util.List;
 @CrossOrigin("*")
 public class MedicoController {
 
-    private MedicoRepository medicoRepository;
-
     @Autowired
-    MedicoService medicoService;
+    private MedicoService medicoService;
 
     @PostMapping
     public MedicoDto save(@RequestBody MedicoDto dto){
@@ -48,18 +47,24 @@ public class MedicoController {
         return dtoReturn;
     }
 
-//    @GetMapping
-//    public List<MedicoDto> todos() {
-//
-//        Medico medicoReturn = medicoService.findById(id);
-//        MedicoDto dtoReturn = new MedicoDto();
-//        dtoReturn.setId(medicoReturn.getId());
-//        dtoReturn.setNome(medicoReturn.getNome());
-//        dtoReturn.setEspecialidade(medicoReturn.getEspecialidade());
-//
-//
-//
-//
-//        return (List<dtoReturn>) MedicoRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
-//    }
+    @GetMapping
+    public List<MedicoDto> todos() {
+
+        List<Medico> medicos = medicoService.findAll();
+        List<MedicoDto> medicosDto = new ArrayList<>();
+
+        for (Medico medico : medicos) {
+
+            MedicoDto medicoDto = new MedicoDto();
+            medicoDto.setId(medico.getId());
+            medicoDto.setNome(medico.getNome());
+            medicoDto.setEspecialidade(medico.getEspecialidade());
+
+            medicosDto.add(medicoDto);
+
+        }
+
+        return medicosDto;
+    }
+
 }

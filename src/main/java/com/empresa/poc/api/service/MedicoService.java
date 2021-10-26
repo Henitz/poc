@@ -5,18 +5,30 @@ import com.empresa.poc.api.repository.MedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MedicoService {
 
     @Autowired
     MedicoRepository medicoRepository;
+
     public Medico findById(Integer id) {
         return medicoRepository.findById(id).get();
     }
 
     public Medico save(Medico medico) {
+
+        //TODO Criar um switch case para todas as especialidades
+        if(medico.getEspecialidade().name().equals("ORTOPEDISTA")){
+            medico.setSalario(20000.0);
+        }
+
         return medicoRepository.save(medico);
     }
 
-//    public Medico findAll()
+    public List<Medico> findAll(){
+
+        return (List<Medico>) medicoRepository.findAll();
+    }
 }
