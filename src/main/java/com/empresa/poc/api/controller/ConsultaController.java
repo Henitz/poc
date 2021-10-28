@@ -105,8 +105,22 @@ public class ConsultaController {
             consultaDto.setId(consulta.getId());
             consultaDto.setData(consulta.getData());
 
+            MedicoDto medicoDto = new MedicoDto();
+            medicoDto.setId(consulta.getMedico().getId());
+            medicoDto.setNome(consulta.getMedico().getNome());
+            medicoDto.setEspecialidade(consulta.getMedico().getEspecialidade());
+            consultaDto.setMedico(medicoDto);
+
+            PacienteDto pacienteDto = new PacienteDto();
+            pacienteDto.setId(consulta.getPaciente().getId());
+            pacienteDto.setNome(consulta.getPaciente().getNome());
+            pacienteDto.setPlanoDeSaude(consulta.getPaciente().getPlanoDeSaude());
+            consultaDto.setPaciente(pacienteDto);
+
+
 
             consultasDto.add(consultaDto);
+
 
         }
 
