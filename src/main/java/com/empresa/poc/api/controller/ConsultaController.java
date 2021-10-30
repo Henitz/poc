@@ -77,14 +77,14 @@ public class ConsultaController {
         consultaDto.setId(consultaSaved.getId());
         consultaDto.setData(consultaSaved.getData());
 
-        Medico medicoSaved = medicoService.findById(id);
+        Medico medicoSaved = medicoService.findById(consultaSaved.getMedico().getId());
         MedicoDto medicoDto = new MedicoDto();
         medicoDto.setId(medicoSaved.getId());
         medicoDto.setNome(medicoSaved.getNome());
         medicoDto.setEspecialidade(medicoSaved.getEspecialidade());
         consultaDto.setMedico(medicoDto);
 
-        Paciente pacienteSaved = pacienteService.findById(id);
+        Paciente pacienteSaved = pacienteService.findById(consultaSaved.getPaciente().getId());
         PacienteDto pacienteDto = new PacienteDto();
         pacienteDto.setId(pacienteSaved.getId());
         pacienteDto.setNome(pacienteSaved.getNome());
@@ -135,5 +135,6 @@ public class ConsultaController {
         return new ConsultaDto();
 
     }
+
 
 }
