@@ -21,12 +21,8 @@ public class PacienteController {
 
     @PostMapping
     public PacienteDto save(@RequestBody PacienteDto dto) {
-        Paciente paciente = new Paciente();
-        paciente.setNome(dto.getNome());
-        paciente.setPlanoDeSaude(dto.getPlanoDeSaude());
 
-
-        Paciente pacienteReturn = pacienteService.save(paciente);
+        Paciente pacienteReturn = pacienteService.save(new Paciente(dto.getNome(), dto.getPlanoDeSaude()));
         PacienteDto dtoReturn = new PacienteDto();
         dtoReturn.setId(pacienteReturn.getId());
         dtoReturn.setNome(pacienteReturn.getNome());
@@ -75,6 +71,22 @@ public class PacienteController {
 
         return new PacienteDto();
 
+    }
+
+    @PutMapping("/{id}")
+    public PacienteDto alterar(@RequestBody PacienteDto dto, @PathVariable int id) {
+        Paciente paciente = new Paciente();
+        paciente.setId(id);
+        paciente.setNome(dto.getNome());
+        paciente.setPlanoDeSaude(dto.getPlanoDeSaude());
+
+        Paciente pacienteReturn = pacienteService.save(paciente);
+        PacienteDto dtoReturn = new PacienteDto();
+        dtoReturn.setId(pacienteReturn.getId());
+        dtoReturn.setNome(pacienteReturn.getNome());
+        dtoReturn.setPlanoDeSaude(pacienteReturn.getPlanoDeSaude());
+
+        return dtoReturn;
     }
 
 }

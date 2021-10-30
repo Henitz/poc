@@ -136,5 +136,43 @@ public class ConsultaController {
 
     }
 
+    @PutMapping("/{id}")
+    public ConsultaDto alterar(@RequestBody ConsultaDto dto, @PathVariable int id) {
+        Consulta consulta = new Consulta();
+        consulta.setId(id);
+        consulta.setData(dto.getData());
+
+        Medico medico = new Medico();
+        medico.setId(dto.getMedico().getId());
+
+        Paciente paciente = new Paciente();
+        paciente.setId(dto.getPaciente().getId());
+
+        consulta.setMedico(medico);
+        consulta.setPaciente(paciente);
+
+        Consulta consultaReturn = consultaService.save(consulta);
+
+        ConsultaDto dtoReturn = new ConsultaDto();
+
+        dtoReturn.setId(consultaReturn.getId());
+        dtoReturn.setData(consultaReturn.getData());
+
+        MedicoDto medicoDto = new MedicoDto();
+        medicoDto.setId(consultaReturn.getMedico().getId());
+        medicoDto.setNome(consultaReturn.getMedico().getNome());
+        medicoDto.setEspecialidade(consultaReturn.getMedico().getEspecialidade());
+
+        dtoReturn.setMedico(medicoDto);
+
+        PacienteDto pacienteDto = new PacienteDto();
+        pacienteDto.setId(consultaReturn.getPaciente().getId());
+        pacienteDto.setNome(consultaReturn.getPaciente().getNome());
+        pacienteDto.setPlanoDeSaude(consultaReturn.getPaciente().getPlanoDeSaude());
+
+        dtoReturn.setPaciente(pacienteDto);
+
+        return dtoReturn;
+    }
 
 }

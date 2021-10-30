@@ -7,6 +7,11 @@ public class Paciente {
 
     public Paciente(){ }
 
+    public Paciente(String nome, PlanoDeSaude planoDeSaude){
+        this.nome = nome;
+        this.planoDeSaude = planoDeSaude;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

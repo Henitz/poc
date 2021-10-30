@@ -79,7 +79,7 @@ public class MedicoController {
     @PutMapping("/{id}")
     public MedicoDto alterar(@RequestBody MedicoDto dto, @PathVariable int id) {
         Medico medico = new Medico();
-        medico.setId(id);
+        medico.setId(id); //para alterar passo o id
         medico.setNome(dto.getNome());
         medico.setEspecialidade(dto.getEspecialidade());
 

@@ -19,11 +19,6 @@ public class MedicoService {
 
     public Medico save(Medico medico) {
 
-        //TODO Criar um switch case para todas as especialidades
-//        if(medico.getEspecialidade().name().equals("ORTOPEDISTA")){
-//            medico.setSalario(20000.0);
-//        }
-
         switch (medico.getEspecialidade().name()) {
             case "ORTOPEDISTA":
                 medico.setSalario(20000.0);

@@ -75,4 +75,19 @@ public class RemedioController {
         return new RemedioDto();
 
     }
+
+    @PutMapping("/{id}")
+    public RemedioDto alterar(@RequestBody RemedioDto dto, @PathVariable int id) {
+        Remedio remedio = new Remedio();
+        remedio.setId(id);
+        remedio.setNome(dto.getNome());
+
+
+        Remedio remedioReturn = remedioService.save(remedio);
+        RemedioDto dtoReturn = new RemedioDto();
+        dtoReturn.setId(remedioReturn.getId());
+        dtoReturn.setNome(remedioReturn.getNome());
+
+        return dtoReturn;
+    }
 }
