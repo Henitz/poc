@@ -60,3 +60,34 @@ Remedio
 |_ RemedioService Injetar a repository
 |_ RemedioRepository Repository não é classe, é interface, extends CRUDRepository<Remedio, Integer>
 ```
+
+### Configuracoes para rodar o postgresql local
+
+```
+-Dspring.profiles.active=dev
+```
+
+
+![Spring](dev-profile.png)
+
+### Trabalhando com tags
+
+## Tag leve
+
+```
+git tag v1.0.0
+
+git push origin v1.0.0
+```
+
+### Versioning
+
+## Semantic Versioning 
+
+- MAJOR version when you make incompatible API changes,
+- MINOR version when you add functionality in a backwards compatible manner, and
+- PATCH version when you make backwards compatible bug fixes.
+
+Example:
+
+`MAJOR.MINOR.PATCH`

@@ -6,6 +6,7 @@ import com.empresa.poc.api.domain.PlanoDeSaude;
 
 
 import java.util.Date;
+import java.util.Set;
 
 public class ConsultaDto {
 
@@ -14,7 +15,15 @@ public class ConsultaDto {
     public MedicoDto medico;
     public PacienteDto paciente;
 
+    public Set<RemedioDto> remedios;
 
+    public Set<RemedioDto> getRemedios() {
+        return remedios;
+    }
+
+    public void setRemedios(Set<RemedioDto> remedios) {
+        this.remedios = remedios;
+    }
 
     public ConsultaDto() {
 

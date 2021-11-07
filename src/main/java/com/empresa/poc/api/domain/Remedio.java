@@ -1,9 +1,9 @@
 package com.empresa.poc.api.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 public class Remedio {
 
@@ -27,6 +27,4 @@ public class Remedio {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-
 }

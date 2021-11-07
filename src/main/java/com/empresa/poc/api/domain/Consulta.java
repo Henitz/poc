@@ -2,6 +2,8 @@ package com.empresa.poc.api.domain;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Consulta {
@@ -11,11 +13,20 @@ public class Consulta {
     private Integer id;
     private Date data;
 
+    @ManyToMany
+    @JoinTable(
+            name = "remedios_consultas",
+            joinColumns = @JoinColumn(name = "consulta_id"),
+            inverseJoinColumns = @JoinColumn(name = "remedio_id"))
+    private Set<Remedio> remedios = new HashSet<>();
 
-    // Relacionamento vai aqui
-    // Medico
-    //Paciente
-    //GetandSetter
+    public Set<Remedio> getRemedios() {
+        return remedios;
+    }
+
+    public void setRemedios(Set<Remedio> remedios) {
+        this.remedios = remedios;
+    }
 
     @ManyToOne
     @JoinColumn(name = "medico_id")
@@ -25,9 +36,6 @@ public class Consulta {
     @ManyToOne
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
-
-
-
 
     public Consulta(){
 
@@ -64,6 +72,5 @@ public class Consulta {
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
-
 
 }
