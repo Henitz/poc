@@ -109,6 +109,19 @@ public class ConsultaController {
         pacienteDto.setPlanoDeSaude(pacienteSaved.getPlanoDeSaude());
         consultaDto.setPaciente(pacienteDto);
 
+
+        Set<RemedioDto> remediosDto = new HashSet<>();
+
+
+        for (Remedio  r : consultaSaved.getRemedios()) {
+            RemedioDto remedioDto = new RemedioDto();
+            remedioDto.setId(r.getId());
+            remedioDto.setNome(remedioService.findById(r.getId()).getNome());
+            remediosDto.add(remedioDto);
+        }
+        consultaDto.setRemedios(remediosDto);
+
+
         return consultaDto;
     }
     @GetMapping
@@ -135,6 +148,17 @@ public class ConsultaController {
             pacienteDto.setPlanoDeSaude(consulta.getPaciente().getPlanoDeSaude());
             consultaDto.setPaciente(pacienteDto);
 
+
+            Set<RemedioDto> remediosDto = new HashSet<>();
+
+
+            for (Remedio  r : consulta.getRemedios()) {
+                RemedioDto remedioDto = new RemedioDto();
+                remedioDto.setId(r.getId());
+                remedioDto.setNome(remedioService.findById(r.getId()).getNome());
+                remediosDto.add(remedioDto);
+            }
+            consultaDto.setRemedios(remediosDto);
 
 
             consultasDto.add(consultaDto);
