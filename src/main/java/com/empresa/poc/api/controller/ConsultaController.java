@@ -214,6 +214,20 @@ public class ConsultaController {
 
         dtoReturn.setPaciente(pacienteDto);
 
+        Set<RemedioDto> remediosDto = new HashSet<>();
+
+        for (Remedio r : consultaReturn.getRemedios()) {
+            RemedioDto remedioDto = new RemedioDto();
+            remedioDto.setId(r.getId());
+            remedioDto.setNome(remedioService.findById(r.getId()).getNome());
+            remediosDto.add(remedioDto);
+        }
+        dtoReturn.setRemedios(remediosDto);
+
+
+
+
+
         return dtoReturn;
     }
 
