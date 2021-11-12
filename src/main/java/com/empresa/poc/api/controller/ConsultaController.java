@@ -32,10 +32,9 @@ public class ConsultaController {
     @PostMapping
     public ConsultaDto save(@RequestBody ConsultaDto dto) {
         Consulta consulta = new Consulta();
-        Set<Remedio> remedios = new HashSet<>();
         consulta.setData(dto.getData());
 
-        if(!(Objects.isNull(dto.getMedico()) || Objects.isNull(dto.getPaciente()) || Objects.isNull(dto.getRemedios()))) {
+        if(!(Objects.isNull(dto.getMedico()) || Objects.isNull(dto.getPaciente()))) {
             Medico medico = new Medico();
             medico.setId(dto.getMedico().getId());
             medico.setNome(dto.getMedico().getNome());
@@ -48,12 +47,6 @@ public class ConsultaController {
             paciente.setPlanoDeSaude(dto.getPaciente().getPlanoDeSaude());
             consulta.setPaciente(paciente);
 
-            for (RemedioDto r : dto.getRemedios()) {
-                Remedio remedio = new Remedio();
-                remedio.setId(r.getId());
-                remedios.add(remedio);
-            }
-            consulta.setRemedios(remedios);
         }
         Consulta consultaReturn = consultaService.save(consulta);
 
@@ -61,7 +54,7 @@ public class ConsultaController {
         dtoReturn.setId(consultaReturn.getId());
         dtoReturn.setData(consultaReturn.getData());
 
-        if(!(Objects.isNull(dto.getMedico()) || Objects.isNull(dto.getPaciente()) || Objects.isNull(dto.getRemedios()))) {
+        if(!(Objects.isNull(dto.getMedico()) || Objects.isNull(dto.getPaciente()))) {
             MedicoDto medicoDto = new MedicoDto();
             medicoDto.setId(medicoService.findById(consultaReturn.getMedico().getId()).getId());
             medicoDto.setNome(medicoService.findById(consultaReturn.getMedico().getId()).getNome());
@@ -73,16 +66,6 @@ public class ConsultaController {
             pacienteDto.setNome(pacienteService.findById(consultaReturn.getPaciente().getId()).getNome());
             pacienteDto.setPlanoDeSaude(pacienteService.findById(consultaReturn.getPaciente().getId()).getPlanoDeSaude());
             dtoReturn.setPaciente(pacienteDto);
-
-            Set<RemedioDto> remediosDto = new HashSet<>();
-
-            for (Remedio r : consultaReturn.getRemedios()) {
-                RemedioDto remedioDto = new RemedioDto();
-                remedioDto.setId(r.getId());
-                remedioDto.setNome(remedioService.findById(r.getId()).getNome());
-                remediosDto.add(remedioDto);
-            }
-            dtoReturn.setRemedios(remediosDto);
         }
         return dtoReturn;
     }
@@ -151,15 +134,15 @@ public class ConsultaController {
 
             Set<RemedioDto> remediosDto = new HashSet<>();
 
-
-            for (Remedio  r : consulta.getRemedios()) {
-                RemedioDto remedioDto = new RemedioDto();
-                remedioDto.setId(r.getId());
-                remedioDto.setNome(remedioService.findById(r.getId()).getNome());
-                remediosDto.add(remedioDto);
+            if(consulta.getRemedios().size()!=0) {
+                for (Remedio r : consulta.getRemedios()) {
+                    RemedioDto remedioDto = new RemedioDto();
+                    remedioDto.setId(r.getId());
+                    remedioDto.setNome(remedioService.findById(r.getId()).getNome());
+                    remediosDto.add(remedioDto);
+                }
+                consultaDto.setRemedios(remediosDto);
             }
-            consultaDto.setRemedios(remediosDto);
-
 
             consultasDto.add(consultaDto);
 
