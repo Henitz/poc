@@ -5,13 +5,14 @@ import com.empresa.poc.api.domain.Paciente;
 import com.empresa.poc.api.domain.PlanoDeSaude;
 
 
+import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.Set;
 
 public class ConsultaDto {
 
     private Integer id;
-    private Date data;
+    private String data;
     public MedicoDto medico;
     public PacienteDto paciente;
 
@@ -29,6 +30,14 @@ public class ConsultaDto {
 
     }
 
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -37,19 +46,13 @@ public class ConsultaDto {
         this.id = id;
     }
 
-    public ConsultaDto(Integer id, Date data) {
+    public ConsultaDto(Integer id, String data) {
 
         this.data = data;
         this.id = id;
     }
 
-    public Date getData() {
-        return data;
-    }
 
-    public void setData(Date data) {
-        this.data = data;
-    }
 
     public MedicoDto getMedico() {
         return medico;

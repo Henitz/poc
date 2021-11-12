@@ -13,6 +13,8 @@ import com.empresa.poc.api.service.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -30,9 +32,9 @@ public class ConsultaController {
     RemedioService remedioService;
 
     @PostMapping
-    public ConsultaDto save(@RequestBody ConsultaDto dto) {
+    public ConsultaDto save(@RequestBody ConsultaDto dto) throws ParseException {
         Consulta consulta = new Consulta();
-        consulta.setData(dto.getData());
+        consulta.setData(formataDataIda(dto.getData()));
 
         if(!(Objects.isNull(dto.getMedico()) || Objects.isNull(dto.getPaciente()))) {
             Medico medico = new Medico();
@@ -52,7 +54,7 @@ public class ConsultaController {
 
         ConsultaDto dtoReturn = new ConsultaDto();
         dtoReturn.setId(consultaReturn.getId());
-        dtoReturn.setData(consultaReturn.getData());
+        dtoReturn.setData(formataDataVolta(consultaReturn.getData()));
 
         if(!(Objects.isNull(dto.getMedico()) || Objects.isNull(dto.getPaciente()))) {
             MedicoDto medicoDto = new MedicoDto();
@@ -76,7 +78,7 @@ public class ConsultaController {
         Consulta consultaSaved = consultaService.findById(id);
         ConsultaDto consultaDto = new ConsultaDto();
         consultaDto.setId(consultaSaved.getId());
-        consultaDto.setData(consultaSaved.getData());
+        consultaDto.setData(formataDataVolta(consultaSaved.getData()));
 
         Medico medicoSaved = medicoService.findById(consultaSaved.getMedico().getId());
         MedicoDto medicoDto = new MedicoDto();
@@ -107,6 +109,17 @@ public class ConsultaController {
 
         return consultaDto;
     }
+
+    private String formataDataVolta(Date date){
+        SimpleDateFormat formatador = new SimpleDateFormat("dd-MM-yyyy");
+        return formatador.format(date);
+    }
+
+    private Date formataDataIda(String date) throws ParseException {
+        SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
+        return formatador.parse(date);
+    }
+
     @GetMapping
     public List<ConsultaDto> todos() {
 
@@ -117,7 +130,17 @@ public class ConsultaController {
 
             ConsultaDto consultaDto = new ConsultaDto();
             consultaDto.setId(consulta.getId());
-            consultaDto.setData(consulta.getData());
+
+
+
+
+
+
+
+            consultaDto.setData(formataDataVolta(consulta.getData()));
+
+
+
 
             MedicoDto medicoDto = new MedicoDto();
             medicoDto.setId(consulta.getMedico().getId());
@@ -162,10 +185,10 @@ public class ConsultaController {
     }
 
     @PutMapping("/{id}")
-    public ConsultaDto alterar(@RequestBody ConsultaDto dto, @PathVariable int id) {
+    public ConsultaDto alterar(@RequestBody ConsultaDto dto, @PathVariable int id) throws ParseException {
         Consulta consulta = new Consulta();
         consulta.setId(id);
-        consulta.setData(dto.getData());
+        consulta.setData(formataDataIda(dto.getData()));
 
         Medico medico = new Medico();
         medico.setId(dto.getMedico().getId());
@@ -190,7 +213,7 @@ public class ConsultaController {
         ConsultaDto dtoReturn = new ConsultaDto();
 
         dtoReturn.setId(consultaReturn.getId());
-        dtoReturn.setData(consultaReturn.getData());
+        dtoReturn.setData(formataDataVolta(consultaReturn.getData()));
 
         MedicoDto medicoDto = new MedicoDto();
         medicoDto.setId(consultaReturn.getMedico().getId());

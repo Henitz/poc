@@ -11,6 +11,7 @@ public class Consulta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private Date data;
 
     @ManyToMany
