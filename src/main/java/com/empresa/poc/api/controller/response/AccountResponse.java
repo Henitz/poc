@@ -2,13 +2,13 @@ package com.empresa.poc.api.controller.response;
 
 public class AccountResponse {
 
-    private Long id;
+    private String accountId;
 
-    public Long getId() {
-        return id;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 }

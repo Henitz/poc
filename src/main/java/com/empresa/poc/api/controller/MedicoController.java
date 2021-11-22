@@ -1,10 +1,10 @@
 package com.empresa.poc.api.controller;
 
-import com.empresa.poc.api.controller.dto.AccountDto;
 import com.empresa.poc.api.controller.dto.MedicoDto;
 import com.empresa.poc.api.controller.response.AccountResponse;
 import com.empresa.poc.api.domain.Account;
 import com.empresa.poc.api.domain.Medico;
+import com.empresa.poc.api.service.AccountService;
 import com.empresa.poc.api.service.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +20,16 @@ public class MedicoController {
     @Autowired
     private MedicoService medicoService;
 
-    @PostMapping
-    public MedicoDto save(@RequestBody MedicoDto dto){
+    @Autowired
+    private AccountService accountService;
+
+    @PostMapping("/{accountId}")
+    public MedicoDto save(@PathVariable String accountId, @RequestBody MedicoDto dto){
         Medico medico = new Medico();
         medico.setNome(dto.getNome());
         medico.setEspecialidade(dto.getEspecialidade());
 
-        Account account = new Account();
-        account.setId(dto.getAccount().getId());
+        Account account = accountService.getAccountByAccountId(accountId);
         medico.setAccount(account);
 
         Medico medicoReturn = medicoService.save(medico);
@@ -37,12 +39,12 @@ public class MedicoController {
         dtoReturn.setEspecialidade(medicoReturn.getEspecialidade());
 
         AccountResponse accountResponse = new AccountResponse();
-        accountResponse.setId(medicoReturn.getAccount().getId());
-        dtoReturn.setAccount(accountResponse);
+        accountResponse.setAccountId(medicoReturn.getAccount().getAccountId());
+
         return dtoReturn;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{accountId}/{id}")
     public MedicoDto um(@PathVariable Integer id) {
 
         Medico medicoReturn = medicoService.findById(id);
@@ -54,10 +56,10 @@ public class MedicoController {
         return dtoReturn;
     }
 
-    @GetMapping
-    public List<MedicoDto> todos() {
+    @GetMapping("/{accountId}")
+    public List<MedicoDto> todos(@PathVariable String accountId) {
 
-        List<Medico> medicos = medicoService.findAll();
+        List<Medico> medicos = medicoService.findByAccountId(accountId);
         List<MedicoDto> medicosDto = new ArrayList<>();
 
         for (Medico medico : medicos) {

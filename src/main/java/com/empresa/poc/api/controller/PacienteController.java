@@ -25,7 +25,7 @@ public class PacienteController {
     public PacienteDto save(@RequestBody PacienteDto dto) {
 
         Account account = new Account();
-        account.setId(dto.getAccount().getId());
+        account.setAccountId(dto.getAccount().getAccountId());
 
         Paciente pacienteReturn = pacienteService.save(
                 new Paciente(dto.getNome(), dto.getPlanoDeSaude(), account));
@@ -35,7 +35,7 @@ public class PacienteController {
         dtoReturn.setPlanoDeSaude(pacienteReturn.getPlanoDeSaude());
 
         AccountResponse accountResponse = new AccountResponse();
-        accountResponse.setId(pacienteReturn.getAccount().getId());
+        accountResponse.setAccountId(pacienteReturn.getAccount().getAccountId());
         dtoReturn.setAccount(accountResponse);
 
         return dtoReturn;

@@ -38,6 +38,11 @@ public class MedicoService {
         return (List<Medico>) medicoRepository.findAll();
     }
 
+    public List<Medico> findByAccountId(String accountId) {
+
+        return  medicoRepository.findByAccountAccountId(accountId);
+    }
+
     public Medico deleteById(Integer id) {
 
         medicoRepository.deleteById(id);

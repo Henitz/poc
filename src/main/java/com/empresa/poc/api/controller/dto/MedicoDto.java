@@ -7,19 +7,9 @@ public class MedicoDto {
     private Integer id;
     private String nome;
     private Especialidade especialidade;
-    private AccountResponse account;
-
 
     public MedicoDto(){
 
-    }
-
-    public AccountResponse getAccount() {
-        return account;
-    }
-
-    public void setAccount(AccountResponse account) {
-        this.account = account;
     }
 
     public MedicoDto(String nome){
