@@ -1,10 +1,13 @@
 package com.empresa.poc.api.controller.dto;
 
+import com.empresa.poc.api.domain.Account;
 import com.empresa.poc.api.domain.Medico;
 import com.empresa.poc.api.domain.Paciente;
 import com.empresa.poc.api.domain.PlanoDeSaude;
 
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.Set;
@@ -15,6 +18,17 @@ public class ConsultaDto {
     private String data;
     public MedicoDto medico;
     public PacienteDto paciente;
+
+
+    private AccountDto accountDto;
+
+    public AccountDto getAccountDto() {
+        return accountDto;
+    }
+
+    public void setAccountDto(AccountDto accountDto) {
+        this.accountDto = accountDto;
+    }
 
     public Set<RemedioDto> remedios;
 

@@ -1,11 +1,12 @@
 package com.empresa.poc.api.controller;
 
+import com.empresa.poc.api.controller.dto.AccountDto;
 import com.empresa.poc.api.controller.dto.MedicoDto;
+import com.empresa.poc.api.controller.response.AccountResponse;
+import com.empresa.poc.api.domain.Account;
 import com.empresa.poc.api.domain.Medico;
-import com.empresa.poc.api.repository.MedicoRepository;
 import com.empresa.poc.api.service.MedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,10 +22,13 @@ public class MedicoController {
 
     @PostMapping
     public MedicoDto save(@RequestBody MedicoDto dto){
-
         Medico medico = new Medico();
         medico.setNome(dto.getNome());
         medico.setEspecialidade(dto.getEspecialidade());
+
+        Account account = new Account();
+        account.setId(dto.getAccount().getId());
+        medico.setAccount(account);
 
         Medico medicoReturn = medicoService.save(medico);
         MedicoDto dtoReturn = new MedicoDto();
@@ -32,6 +36,9 @@ public class MedicoController {
         dtoReturn.setNome(medicoReturn.getNome());
         dtoReturn.setEspecialidade(medicoReturn.getEspecialidade());
 
+        AccountResponse accountResponse = new AccountResponse();
+        accountResponse.setId(medicoReturn.getAccount().getId());
+        dtoReturn.setAccount(accountResponse);
         return dtoReturn;
     }
 

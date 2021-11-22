@@ -1,5 +1,6 @@
 package com.empresa.poc.api.controller.dto;
 
+import com.empresa.poc.api.controller.response.AccountResponse;
 import com.empresa.poc.api.domain.PlanoDeSaude;
 
 public class PacienteDto {
@@ -7,6 +8,16 @@ public class PacienteDto {
     private Integer id;
     private String nome;
     private PlanoDeSaude planoDeSaude;
+
+    private AccountResponse account;
+
+    public AccountResponse getAccount() {
+        return account;
+    }
+
+    public void setAccount(AccountResponse account) {
+        this.account = account;
+    }
 
     public Integer getId() {
         return id;

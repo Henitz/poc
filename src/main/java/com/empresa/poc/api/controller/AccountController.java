@@ -25,6 +25,7 @@ public class AccountController {
         dtoReturn.setId(accountReturn.getId());
         dtoReturn.setAccountId(accountReturn.getAccountId());
         dtoReturn.setEmail(accountReturn.getEmail());
+        dtoReturn.setAccountId(accountReturn.getAccountId());
 
         return dtoReturn;
     }

@@ -2,7 +2,9 @@ package com.empresa.poc.api.controller;
 
 import com.empresa.poc.api.controller.dto.MedicoDto;
 import com.empresa.poc.api.controller.dto.PacienteDto;
+import com.empresa.poc.api.domain.Account;
 import com.empresa.poc.api.domain.Medico;
+import com.empresa.poc.api.controller.response.AccountResponse;
 import com.empresa.poc.api.domain.Paciente;
 import com.empresa.poc.api.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +24,19 @@ public class PacienteController {
     @PostMapping
     public PacienteDto save(@RequestBody PacienteDto dto) {
 
-        Paciente pacienteReturn = pacienteService.save(new Paciente(dto.getNome(), dto.getPlanoDeSaude()));
+        Account account = new Account();
+        account.setId(dto.getAccount().getId());
+
+        Paciente pacienteReturn = pacienteService.save(
+                new Paciente(dto.getNome(), dto.getPlanoDeSaude(), account));
         PacienteDto dtoReturn = new PacienteDto();
         dtoReturn.setId(pacienteReturn.getId());
         dtoReturn.setNome(pacienteReturn.getNome());
         dtoReturn.setPlanoDeSaude(pacienteReturn.getPlanoDeSaude());
+
+        AccountResponse accountResponse = new AccountResponse();
+        accountResponse.setId(pacienteReturn.getAccount().getId());
+        dtoReturn.setAccount(accountResponse);
 
         return dtoReturn;
     }

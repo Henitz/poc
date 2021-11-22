@@ -1,9 +1,6 @@
 package com.empresa.poc.api.controller;
 
-import com.empresa.poc.api.controller.dto.ConsultaDto;
-import com.empresa.poc.api.controller.dto.MedicoDto;
-import com.empresa.poc.api.controller.dto.PacienteDto;
-import com.empresa.poc.api.controller.dto.RemedioDto;
+import com.empresa.poc.api.controller.dto.*;
 import com.empresa.poc.api.domain.*;
 import com.empresa.poc.api.service.ConsultaService;
 import com.empresa.poc.api.service.MedicoService;
@@ -36,6 +33,11 @@ public class ConsultaController {
         Consulta consulta = new Consulta();
         consulta.setData(formataDataIda(dto.getData()));
 
+
+        Account account = new Account();
+        account.setId(dto.getAccountDto().getId());
+        consulta.setAccount(account);
+
         if(!(Objects.isNull(dto.getMedico()) || Objects.isNull(dto.getPaciente()))) {
             Medico medico = new Medico();
             medico.setId(dto.getMedico().getId());
@@ -55,6 +57,9 @@ public class ConsultaController {
         ConsultaDto dtoReturn = new ConsultaDto();
         dtoReturn.setId(consultaReturn.getId());
         dtoReturn.setData(formataDataVolta(consultaReturn.getData()));
+
+        AccountDto accountDto = new AccountDto();
+        accountDto.setId(consultaReturn.getAccount().getId());
 
         if(!(Objects.isNull(dto.getMedico()) || Objects.isNull(dto.getPaciente()))) {
             MedicoDto medicoDto = new MedicoDto();

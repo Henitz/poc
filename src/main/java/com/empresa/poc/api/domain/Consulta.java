@@ -34,12 +34,28 @@ public class Consulta {
     private Medico medico;
 
 
+
+
     @ManyToOne
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
+
+
     public Consulta(){
 
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public Integer getId() {

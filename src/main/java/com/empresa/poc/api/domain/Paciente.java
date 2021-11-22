@@ -7,9 +7,10 @@ public class Paciente {
 
     public Paciente(){ }
 
-    public Paciente(String nome, PlanoDeSaude planoDeSaude){
+    public Paciente(String nome, PlanoDeSaude planoDeSaude, Account account){
         this.nome = nome;
         this.planoDeSaude = planoDeSaude;
+        this.account = account;
     }
 
     @Id
@@ -19,6 +20,18 @@ public class Paciente {
 
     @Enumerated(EnumType.ORDINAL)
     private PlanoDeSaude planoDeSaude;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
     public Integer getId() {
         return id;
