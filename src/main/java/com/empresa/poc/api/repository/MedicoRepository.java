@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface MedicoRepository extends CrudRepository<Medico, Integer> {
     List<Medico> findByAccountAccountId(String accountId);
+
+    Medico findByIdAndAccountAccountId(Integer id, String accountId);
 }

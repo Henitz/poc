@@ -48,4 +48,8 @@ public class MedicoService {
         medicoRepository.deleteById(id);
         return new Medico();
     }
+
+    public Medico findByIdAndAccountAccountId(Integer id, String accountId) {
+        return  medicoRepository.findByIdAndAccountAccountId(id, accountId);
+    }
 }

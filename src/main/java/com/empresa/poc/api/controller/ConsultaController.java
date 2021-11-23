@@ -1,12 +1,10 @@
 package com.empresa.poc.api.controller;
 
 import com.empresa.poc.api.controller.dto.*;
+import com.empresa.poc.api.controller.response.AccountResponse;
 import com.empresa.poc.api.domain.*;
-import com.empresa.poc.api.service.ConsultaService;
-import com.empresa.poc.api.service.MedicoService;
-import com.empresa.poc.api.service.PacienteService;
+import com.empresa.poc.api.service.*;
 
-import com.empresa.poc.api.service.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,15 +25,16 @@ public class ConsultaController {
     PacienteService pacienteService;
     @Autowired
     RemedioService remedioService;
+    @Autowired
+    private AccountService accountService;
 
-    @PostMapping
-    public ConsultaDto save(@RequestBody ConsultaDto dto) throws ParseException {
+
+    @PostMapping("/{accountId}")
+    public ConsultaDto save(@PathVariable String accountId, @RequestBody ConsultaDto dto) throws ParseException {
         Consulta consulta = new Consulta();
         consulta.setData(formataDataIda(dto.getData()));
 
-
-        Account account = new Account();
-        account.setId(dto.getAccountDto().getId());
+        Account account = accountService.getAccountByAccountId(accountId);
         consulta.setAccount(account);
 
         if(!(Objects.isNull(dto.getMedico()) || Objects.isNull(dto.getPaciente()))) {
@@ -74,13 +73,17 @@ public class ConsultaController {
             pacienteDto.setPlanoDeSaude(pacienteService.findById(consultaReturn.getPaciente().getId()).getPlanoDeSaude());
             dtoReturn.setPaciente(pacienteDto);
         }
+
+        AccountResponse accountResponse = new AccountResponse();
+        accountResponse.setAccountId(consulta.getAccount().getAccountId());
+
         return dtoReturn;
     }
 
-    @GetMapping("/{id}")
-    public ConsultaDto one(@PathVariable Integer id) {
+    @GetMapping("/{id}/{accountId}")
+    public ConsultaDto one(@PathVariable Integer id, @PathVariable String accountId) {
 
-        Consulta consultaSaved = consultaService.findById(id);
+        Consulta consultaSaved = consultaService.findByIdAndAccountAccountId(id, accountId);
         ConsultaDto consultaDto = new ConsultaDto();
         consultaDto.setId(consultaSaved.getId());
         consultaDto.setData(formataDataVolta(consultaSaved.getData()));
@@ -125,10 +128,10 @@ public class ConsultaController {
         return formatador.parse(date);
     }
 
-    @GetMapping
-    public List<ConsultaDto> todos() {
+    @GetMapping("/{accountId}")
+    public List<ConsultaDto> todos(@PathVariable String accountId) {
 
-        List<Consulta> consultas = consultaService.findAll();
+        List<Consulta> consultas = consultaService.findByAccountId(accountId);
         List<ConsultaDto> consultasDto = new ArrayList<>();
 
         for (Consulta consulta : consultas) {
@@ -136,16 +139,7 @@ public class ConsultaController {
             ConsultaDto consultaDto = new ConsultaDto();
             consultaDto.setId(consulta.getId());
 
-
-
-
-
-
-
             consultaDto.setData(formataDataVolta(consulta.getData()));
-
-
-
 
             MedicoDto medicoDto = new MedicoDto();
             medicoDto.setId(consulta.getMedico().getId());

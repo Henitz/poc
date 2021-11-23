@@ -4,16 +4,6 @@ public class RemedioDto {
     private Integer id;
     private String nome;
 
-    private AccountDto accountDto;
-
-    public AccountDto getAccountDto() {
-        return accountDto;
-    }
-
-    public void setAccountDto(AccountDto accountDto) {
-        this.accountDto = accountDto;
-    }
-
     public String getNome() {
         return nome;
     }

@@ -9,16 +9,6 @@ public class PacienteDto {
     private String nome;
     private PlanoDeSaude planoDeSaude;
 
-    private AccountResponse account;
-
-    public AccountResponse getAccount() {
-        return account;
-    }
-
-    public void setAccount(AccountResponse account) {
-        this.account = account;
-    }
-
     public Integer getId() {
         return id;
     }

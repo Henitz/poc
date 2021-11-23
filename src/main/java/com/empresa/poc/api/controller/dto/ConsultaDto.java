@@ -19,17 +19,6 @@ public class ConsultaDto {
     public MedicoDto medico;
     public PacienteDto paciente;
 
-
-    private AccountDto accountDto;
-
-    public AccountDto getAccountDto() {
-        return accountDto;
-    }
-
-    public void setAccountDto(AccountDto accountDto) {
-        this.accountDto = accountDto;
-    }
-
     public Set<RemedioDto> remedios;
 
     public Set<RemedioDto> getRemedios() {

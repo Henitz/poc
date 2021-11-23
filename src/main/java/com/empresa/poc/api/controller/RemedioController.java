@@ -48,9 +48,9 @@ public class RemedioController {
         return dtoReturn;
     }
     @GetMapping("/{accountId}/{id}")
-    public RemedioDto one(@PathVariable Integer id) {
+    public RemedioDto one(@PathVariable Integer id, @PathVariable String accountId) {
 
-        Remedio saved = remedioService.findById(id);
+        Remedio saved = remedioService.findByIdAndAccountAccountId(id,accountId);
 
         RemedioDto dto = new RemedioDto();
         dto.setId(saved.getId());
@@ -60,9 +60,9 @@ public class RemedioController {
     }
 
     @GetMapping("/{accountId}")
-    public List<RemedioDto> todos() {
+    public List<RemedioDto> todos(@PathVariable String accountId) {
 
-        List<Remedio> remedios = remedioService.findAll();
+        List<Remedio> remedios = remedioService.findByAccountId(accountId);
         List<RemedioDto> remediosDto = new ArrayList<>();
 
         for (Remedio remedio : remedios) {

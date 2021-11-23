@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 public class PacienteService {
 
+
     @Autowired
     PacienteRepository pacienteRepository;
 
@@ -32,5 +33,12 @@ public class PacienteService {
 
         pacienteRepository.deleteById(id);
         return new Paciente();
+    }
+    public List<Paciente> findByAccountId(String accountId) {
+
+        return  pacienteRepository.findByAccountAccountId(accountId);
+    }
+    public Paciente findByIdAndAccountAccountId(Integer id, String accountId) {
+        return  pacienteRepository.findByIdAndAccountAccountId(id, accountId);
     }
 }

@@ -1,6 +1,7 @@
 package com.empresa.poc.api.service;
 
 import com.empresa.poc.api.domain.Consulta;
+import com.empresa.poc.api.domain.Medico;
 import com.empresa.poc.api.repository.ConsultaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,13 @@ public class ConsultaService {
 
         consultaRepository.deleteById(id);
         return new Consulta();
+    }
+    public List<Consulta> findByAccountId(String accountId) {
+
+        return  consultaRepository.findByAccountAccountId(accountId);
+    }
+
+    public Consulta findByIdAndAccountAccountId(Integer id, String accountId) {
+        return  consultaRepository.findByIdAndAccountAccountId(id, accountId);
     }
 }

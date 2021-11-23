@@ -47,10 +47,9 @@ public class PacienteController {
     }
 
     @GetMapping("/{accountId}/{id}")
-    public PacienteDto getOne(@PathVariable Integer id){
+    public PacienteDto getOne(@PathVariable Integer id, @PathVariable String accountId) {
 
-        Paciente saved = pacienteService.findById(id);
-
+        Paciente saved = pacienteService.findByIdAndAccountAccountId(id, accountId);
         PacienteDto dto = new PacienteDto();
         dto.setId(saved.getId());
         dto.setNome(saved.getNome());
@@ -60,9 +59,9 @@ public class PacienteController {
     }
 
     @GetMapping("/{accountId}")
-    public List<PacienteDto> todos() {
+    public List<PacienteDto> todos(@PathVariable String accountId) {
 
-        List<Paciente> pacientes = pacienteService.findAll();
+        List<Paciente> pacientes = pacienteService.findByAccountId(accountId);
         List<PacienteDto> pacientesDto = new ArrayList<>();
 
         for (Paciente paciente : pacientes) {

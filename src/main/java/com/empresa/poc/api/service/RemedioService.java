@@ -30,4 +30,11 @@ public class RemedioService {
         return new Remedio();
     }
 
+    public List<Remedio> findByAccountId(String accountId) {
+
+        return  remedioRepository.findByAccountAccountId(accountId);
+    }
+    public Remedio findByIdAndAccountAccountId(Integer id, String accountId) {
+        return  remedioRepository.findByIdAndAccountAccountId(id, accountId);
+    }
 }

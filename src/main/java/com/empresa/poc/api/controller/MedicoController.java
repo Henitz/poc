@@ -45,9 +45,9 @@ public class MedicoController {
     }
 
     @GetMapping("/{accountId}/{id}")
-    public MedicoDto um(@PathVariable Integer id) {
+    public MedicoDto um(@PathVariable Integer id, @PathVariable String accountId) {
 
-        Medico medicoReturn = medicoService.findById(id);
+        Medico medicoReturn = medicoService.findByIdAndAccountAccountId(id, accountId);
         MedicoDto dtoReturn = new MedicoDto();
         dtoReturn.setId(medicoReturn.getId());
         dtoReturn.setNome(medicoReturn.getNome());
