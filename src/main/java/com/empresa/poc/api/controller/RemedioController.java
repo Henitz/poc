@@ -4,9 +4,12 @@ package com.empresa.poc.api.controller;
 import com.empresa.poc.api.controller.dto.MedicoDto;
 import com.empresa.poc.api.controller.dto.PacienteDto;
 import com.empresa.poc.api.controller.dto.RemedioDto;
+import com.empresa.poc.api.controller.response.AccountResponse;
+import com.empresa.poc.api.domain.Account;
 import com.empresa.poc.api.domain.Medico;
 import com.empresa.poc.api.domain.Paciente;
 import com.empresa.poc.api.domain.Remedio;
+import com.empresa.poc.api.service.AccountService;
 import com.empresa.poc.api.service.PacienteService;
 import com.empresa.poc.api.service.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +26,28 @@ public class RemedioController {
     @Autowired
     RemedioService remedioService;
 
-    @PostMapping
-    public RemedioDto save(@RequestBody RemedioDto dto) {
+    @Autowired
+    private AccountService accountService;
+
+    @PostMapping("/{accountId}")
+    public RemedioDto save(@PathVariable String accountId, @RequestBody MedicoDto dto) {
         Remedio remedio = new Remedio();
         remedio.setNome(dto.getNome());
+
+        Account account = accountService.getAccountByAccountId(accountId);
+        remedio.setAccount(account);
 
         Remedio remedioReturn = remedioService.save(remedio);
         RemedioDto dtoReturn = new RemedioDto();
         dtoReturn.setId(remedioReturn.getId());
         dtoReturn.setNome(remedioReturn.getNome());
 
+        AccountResponse accountResponse = new AccountResponse();
+        accountResponse.setAccountId(remedioReturn.getAccount().getAccountId());
+
         return dtoReturn;
     }
-    @GetMapping("/{id}")
+    @GetMapping("/{accountId}/{id}")
     public RemedioDto one(@PathVariable Integer id) {
 
         Remedio saved = remedioService.findById(id);
@@ -47,7 +59,7 @@ public class RemedioController {
         return dto;
     }
 
-    @GetMapping
+    @GetMapping("/{accountId}")
     public List<RemedioDto> todos() {
 
         List<Remedio> remedios = remedioService.findAll();

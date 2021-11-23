@@ -6,6 +6,7 @@ import com.empresa.poc.api.domain.Account;
 import com.empresa.poc.api.domain.Medico;
 import com.empresa.poc.api.controller.response.AccountResponse;
 import com.empresa.poc.api.domain.Paciente;
+import com.empresa.poc.api.service.AccountService;
 import com.empresa.poc.api.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +22,19 @@ public class PacienteController {
     @Autowired
     PacienteService pacienteService;
 
-    @PostMapping
-    public PacienteDto save(@RequestBody PacienteDto dto) {
+    @Autowired
+    private AccountService accountService;
 
-        Account account = new Account();
-        account.setAccountId(dto.getAccount().getAccountId());
+    @PostMapping("/{accountId}")
+    public PacienteDto save(@PathVariable String accountId, @RequestBody PacienteDto dto) {
+        Paciente paciente = new Paciente();
+        paciente.setNome(dto.getNome());
+        paciente.setPlanoDeSaude(dto.getPlanoDeSaude());
 
-        Paciente pacienteReturn = pacienteService.save(
-                new Paciente(dto.getNome(), dto.getPlanoDeSaude(), account));
+        Account account = accountService.getAccountByAccountId(accountId);
+        paciente.setAccount(account);
+
+        Paciente pacienteReturn = pacienteService.save(paciente);
         PacienteDto dtoReturn = new PacienteDto();
         dtoReturn.setId(pacienteReturn.getId());
         dtoReturn.setNome(pacienteReturn.getNome());
@@ -36,12 +42,11 @@ public class PacienteController {
 
         AccountResponse accountResponse = new AccountResponse();
         accountResponse.setAccountId(pacienteReturn.getAccount().getAccountId());
-        dtoReturn.setAccount(accountResponse);
 
         return dtoReturn;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{accountId}/{id}")
     public PacienteDto getOne(@PathVariable Integer id){
 
         Paciente saved = pacienteService.findById(id);
@@ -54,7 +59,7 @@ public class PacienteController {
         return dto;
     }
 
-    @GetMapping
+    @GetMapping("/{accountId}")
     public List<PacienteDto> todos() {
 
         List<Paciente> pacientes = pacienteService.findAll();
