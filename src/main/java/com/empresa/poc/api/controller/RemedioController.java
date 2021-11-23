@@ -2,15 +2,11 @@ package com.empresa.poc.api.controller;
 
 
 import com.empresa.poc.api.controller.dto.MedicoDto;
-import com.empresa.poc.api.controller.dto.PacienteDto;
 import com.empresa.poc.api.controller.dto.RemedioDto;
 import com.empresa.poc.api.controller.response.AccountResponse;
 import com.empresa.poc.api.domain.Account;
-import com.empresa.poc.api.domain.Medico;
-import com.empresa.poc.api.domain.Paciente;
 import com.empresa.poc.api.domain.Remedio;
 import com.empresa.poc.api.service.AccountService;
-import com.empresa.poc.api.service.PacienteService;
 import com.empresa.poc.api.service.RemedioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -79,16 +75,16 @@ public class RemedioController {
         return remediosDto;
     }
 
-    @DeleteMapping("/{id}")
-    public RemedioDto delete(@PathVariable Integer id) {
+    @DeleteMapping("/{accountId}/{id}")
+    public RemedioDto delete(@PathVariable Integer id,@PathVariable String accountId) {
 
-        remedioService.deleteById(id);
-
+        if(remedioService.findById(id).getAccount().equals(accountService.getAccountByAccountId(accountId))) {
+            remedioService.deleteById(id);
+        }
         return new RemedioDto();
-
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{accountId}/{id}")
     public RemedioDto alterar(@RequestBody RemedioDto dto, @PathVariable int id) {
         Remedio remedio = new Remedio();
         remedio.setId(id);
