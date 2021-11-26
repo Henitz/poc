@@ -18,8 +18,8 @@ public class ConsultaService {
         return consultaRepository.save(consulta);
     }
 
-    public Consulta findById(Integer id) {
-        return consultaRepository.findById(id).get();
+    public Consulta findByIdAndAccountId(Integer id, String accountId) {
+        return consultaRepository.findByIdAndAccountAccountId(id, accountId);
     }
 
     public List<Consulta> findAll(){

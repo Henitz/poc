@@ -88,14 +88,14 @@ public class ConsultaController {
         consultaDto.setId(consultaSaved.getId());
         consultaDto.setData(formataDataVolta(consultaSaved.getData()));
 
-        Medico medicoSaved = medicoService.findByIdAndAccountAccountId(id, accountId);
+        Medico medicoSaved = medicoService.findByIdAndAccountAccountId(consultaDto.getMedico().getId(), accountId);
         MedicoDto medicoDto = new MedicoDto();
         medicoDto.setId(medicoSaved.getId());
         medicoDto.setNome(medicoSaved.getNome());
         medicoDto.setEspecialidade(medicoSaved.getEspecialidade());
         consultaDto.setMedico(medicoDto);
 
-        Paciente pacienteSaved = pacienteService.findByIdAndAccountAccountId(id, accountId);
+        Paciente pacienteSaved = pacienteService.findByIdAndAccountAccountId(consultaDto.getPaciente().getId(), accountId);
         PacienteDto pacienteDto = new PacienteDto();
         pacienteDto.setId(pacienteSaved.getId());
         pacienteDto.setNome(pacienteSaved.getNome());
@@ -105,7 +105,7 @@ public class ConsultaController {
 
         Set<RemedioDto> remediosDto = new HashSet<>();
 
-       // Remedio RemedioSaved = remedioService.findByIdAndAccountAccountId(id, accountId);
+       Remedio RemedioSaved = remedioService.findByIdAndAccountAccountId(consultaDto.getRemedios(), accountId);
         for (Remedio  r : consultaSaved.getRemedios()) {
             RemedioDto remedioDto = new RemedioDto();
             remedioDto.setId(r.getId());
@@ -177,7 +177,7 @@ public class ConsultaController {
     @DeleteMapping("/{id}/{accountId}")
     public ConsultaDto delete(@PathVariable Integer id, @PathVariable String accountId) {
 
-        if(consultaService.findById(id).getAccount().equals(accountService.getAccountByAccountId(accountId))) {
+        if(consultaService.findByIdAndAccountId(id, accountId).getAccount().equals(accountService.getAccountByAccountId(accountId))) {
             consultaService.deleteById(id);
         }
 
@@ -214,7 +214,7 @@ public class ConsultaController {
 
         ConsultaDto dtoReturn = new ConsultaDto();
 
-        if(consultaService.findById(id).getAccount().equals(account)) {
+        if(consultaService.findByIdAndAccountId(id, accountId).getAccount().equals(account)) {
             Consulta consultaReturn = consultaService.save(consulta);
 
             dtoReturn.setId(consultaReturn.getId());
