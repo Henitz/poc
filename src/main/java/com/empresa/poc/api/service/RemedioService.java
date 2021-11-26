@@ -1,5 +1,6 @@
 package com.empresa.poc.api.service;
 
+import com.empresa.poc.api.controller.dto.RemedioDto;
 import com.empresa.poc.api.domain.Medico;
 import com.empresa.poc.api.domain.Remedio;
 import com.empresa.poc.api.repository.RemedioRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RemedioService {
@@ -42,4 +44,7 @@ public class RemedioService {
         remedioRepository.deleteById(id);
     }
 
+    public Object findByIdAndAccountAccountId(Set<RemedioDto> remedios) {
+        return remedioRepository.findByIdAndAccountAccountId(id, accountId);
+    }
 }

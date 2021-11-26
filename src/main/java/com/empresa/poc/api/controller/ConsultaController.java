@@ -105,11 +105,10 @@ public class ConsultaController {
 
         Set<RemedioDto> remediosDto = new HashSet<>();
 
-       Remedio RemedioSaved = remedioService.findByIdAndAccountAccountId(consultaDto.getRemedios(), accountId);
         for (Remedio  r : consultaSaved.getRemedios()) {
             RemedioDto remedioDto = new RemedioDto();
             remedioDto.setId(r.getId());
-            remedioDto.setNome(r.getNome());
+            remedioDto.setNome(remedioService.findByIdAndAccountAccountId(consultaDto.getRemedios()), accountId);
             remediosDto.add(remedioDto);
         }
         consultaDto.setRemedios(remediosDto);
