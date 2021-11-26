@@ -88,14 +88,14 @@ public class ConsultaController {
         consultaDto.setId(consultaSaved.getId());
         consultaDto.setData(formataDataVolta(consultaSaved.getData()));
 
-        Medico medicoSaved = medicoService.findByIdAndAccountAccountId(consultaDto.getMedico().getId(), accountId);
+        Medico medicoSaved = medicoService.findByIdAndAccountAccountId(consultaSaved.getMedico().getId(), accountId);
         MedicoDto medicoDto = new MedicoDto();
         medicoDto.setId(medicoSaved.getId());
         medicoDto.setNome(medicoSaved.getNome());
         medicoDto.setEspecialidade(medicoSaved.getEspecialidade());
         consultaDto.setMedico(medicoDto);
 
-        Paciente pacienteSaved = pacienteService.findByIdAndAccountAccountId(consultaDto.getPaciente().getId(), accountId);
+        Paciente pacienteSaved = pacienteService.findByIdAndAccountAccountId(consultaSaved.getPaciente().getId(), accountId);
         PacienteDto pacienteDto = new PacienteDto();
         pacienteDto.setId(pacienteSaved.getId());
         pacienteDto.setNome(pacienteSaved.getNome());
@@ -108,7 +108,7 @@ public class ConsultaController {
         for (Remedio  r : consultaSaved.getRemedios()) {
             RemedioDto remedioDto = new RemedioDto();
             remedioDto.setId(r.getId());
-            remedioDto.setNome(remedioService.findByIdAndAccountAccountId(consultaDto.getRemedios()), accountId);
+            remedioDto.setNome(remedioService.findByIdAndAccountAccountId(r.getId(), accountId).getNome());
             remediosDto.add(remedioDto);
         }
         consultaDto.setRemedios(remediosDto);
@@ -199,15 +199,15 @@ public class ConsultaController {
         consulta.setMedico(medico);
         consulta.setPaciente(paciente);
         Set<Remedio> remedios = new HashSet<>();
+        if(Objects.nonNull(dto.getRemedios())) {
+            for (RemedioDto r : dto.getRemedios()) {
+                Remedio remedio = new Remedio();
+                remedio.setId(r.getId());
+                remedios.add(remedio);
+            }
 
-        for(RemedioDto r : dto.getRemedios()) {
-            Remedio remedio = new Remedio();
-            remedio.setId(r.getId());
-            remedios.add(remedio);
+            consulta.setRemedios(remedios);
         }
-
-        consulta.setRemedios(remedios);
-
         Account account = accountService.getAccountByAccountId(accountId);
         consulta.setAccount(account);
 
