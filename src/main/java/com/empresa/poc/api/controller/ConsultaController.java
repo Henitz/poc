@@ -88,14 +88,14 @@ public class ConsultaController {
         consultaDto.setId(consultaSaved.getId());
         consultaDto.setData(formataDataVolta(consultaSaved.getData()));
 
-        Medico medicoSaved = medicoService.findById(consultaSaved.getMedico().getId());
+        Medico medicoSaved = medicoService.findByIdAndAccountAccountId(id, accountId);
         MedicoDto medicoDto = new MedicoDto();
         medicoDto.setId(medicoSaved.getId());
         medicoDto.setNome(medicoSaved.getNome());
         medicoDto.setEspecialidade(medicoSaved.getEspecialidade());
         consultaDto.setMedico(medicoDto);
 
-        Paciente pacienteSaved = pacienteService.findById(consultaSaved.getPaciente().getId());
+        Paciente pacienteSaved = pacienteService.findByIdAndAccountAccountId(id, accountId);
         PacienteDto pacienteDto = new PacienteDto();
         pacienteDto.setId(pacienteSaved.getId());
         pacienteDto.setNome(pacienteSaved.getNome());
@@ -105,11 +105,11 @@ public class ConsultaController {
 
         Set<RemedioDto> remediosDto = new HashSet<>();
 
-
+       // Remedio RemedioSaved = remedioService.findByIdAndAccountAccountId(id, accountId);
         for (Remedio  r : consultaSaved.getRemedios()) {
             RemedioDto remedioDto = new RemedioDto();
             remedioDto.setId(r.getId());
-            remedioDto.setNome(remedioService.findById(r.getId()).getNome());
+            remedioDto.setNome(r.getNome());
             remediosDto.add(remedioDto);
         }
         consultaDto.setRemedios(remediosDto);
