@@ -43,10 +43,11 @@ public class RemedioController {
 
         return dtoReturn;
     }
-    @GetMapping("/{accountId}/{id}")
+
+    @GetMapping("/{id}/{accountId}")
     public RemedioDto one(@PathVariable Integer id, @PathVariable String accountId) {
 
-        Remedio saved = remedioService.findByIdAndAccountAccountId(id,accountId);
+        Remedio saved = remedioService.findByIdAndAccountAccountId(id, accountId);
 
         RemedioDto dto = new RemedioDto();
         dto.setId(saved.getId());
@@ -75,26 +76,30 @@ public class RemedioController {
         return remediosDto;
     }
 
-    @DeleteMapping("/{accountId}/{id}")
-    public RemedioDto delete(@PathVariable Integer id,@PathVariable String accountId) {
+    @DeleteMapping("/{id}/{accountId}")
+    public RemedioDto delete(@PathVariable Integer id, @PathVariable String accountId) {
 
-        if(remedioService.findById(id).getAccount().equals(accountService.getAccountByAccountId(accountId))) {
+        if (remedioService.findById(id).getAccount().equals(accountService.getAccountByAccountId(accountId))) {
             remedioService.deleteById(id);
         }
         return new RemedioDto();
     }
 
-    @PutMapping("/{accountId}/{id}")
-    public RemedioDto alterar(@RequestBody RemedioDto dto, @PathVariable int id) {
+    @PutMapping("/{id}/{accountId}")
+    public RemedioDto alterar(@RequestBody RemedioDto dto, @PathVariable int id, @PathVariable String accountId) {
         Remedio remedio = new Remedio();
         remedio.setId(id);
         remedio.setNome(dto.getNome());
 
+        Account account = accountService.getAccountByAccountId(accountId);
+        remedio.setAccount(account);
 
-        Remedio remedioReturn = remedioService.save(remedio);
         RemedioDto dtoReturn = new RemedioDto();
-        dtoReturn.setId(remedioReturn.getId());
-        dtoReturn.setNome(remedioReturn.getNome());
+        if (remedioService.findById(id).getAccount().equals(account)) {
+            Remedio remedioReturn = remedioService.save(remedio);
+            dtoReturn.setId(remedioReturn.getId());
+            dtoReturn.setNome(remedioReturn.getNome());
+        }
 
         return dtoReturn;
     }

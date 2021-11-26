@@ -76,10 +76,12 @@ public class MedicoController {
         return medicosDto;
     }
 
-    @DeleteMapping("/{id}")
-    public MedicoDto delete(@PathVariable Integer id) {
+    @DeleteMapping("/{id}/{accountId}")
+    public MedicoDto delete(@PathVariable Integer id, @PathVariable String accountId) {
 
-        medicoService.deleteById(id);
+        if(medicoService.findById(id).getAccount().equals(accountService.getAccountByAccountId(accountId))) {
+            medicoService.deleteById(id);
+        }
 
         return new MedicoDto();
 

@@ -174,17 +174,19 @@ public class ConsultaController {
         return consultasDto;
     }
 
-    @DeleteMapping("/{id}")
-    public ConsultaDto delete(@PathVariable Integer id) {
+    @DeleteMapping("/{id}/{accountId}")
+    public ConsultaDto delete(@PathVariable Integer id, @PathVariable String accountId) {
 
-        consultaService.deleteById(id);
+        if(consultaService.findById(id).getAccount().equals(accountService.getAccountByAccountId(accountId))) {
+            consultaService.deleteById(id);
+        }
 
         return new ConsultaDto();
 
     }
 
-    @PutMapping("/{id}")
-    public ConsultaDto alterar(@RequestBody ConsultaDto dto, @PathVariable int id) throws ParseException {
+    @PutMapping("/{id}/{accountId}")
+    public ConsultaDto alterar(@RequestBody ConsultaDto dto, @PathVariable int id,@PathVariable String accountId) throws ParseException {
         Consulta consulta = new Consulta();
         consulta.setId(id);
         consulta.setData(formataDataIda(dto.getData()));
@@ -207,40 +209,41 @@ public class ConsultaController {
 
         consulta.setRemedios(remedios);
 
-        Consulta consultaReturn = consultaService.save(consulta);
+        Account account = accountService.getAccountByAccountId(accountId);
+        consulta.setAccount(account);
 
         ConsultaDto dtoReturn = new ConsultaDto();
 
-        dtoReturn.setId(consultaReturn.getId());
-        dtoReturn.setData(formataDataVolta(consultaReturn.getData()));
+        if(consultaService.findById(id).getAccount().equals(account)) {
+            Consulta consultaReturn = consultaService.save(consulta);
 
-        MedicoDto medicoDto = new MedicoDto();
-        medicoDto.setId(consultaReturn.getMedico().getId());
-        medicoDto.setNome(consultaReturn.getMedico().getNome());
-        medicoDto.setEspecialidade(consultaReturn.getMedico().getEspecialidade());
+            dtoReturn.setId(consultaReturn.getId());
+            dtoReturn.setData(formataDataVolta(consultaReturn.getData()));
 
-        dtoReturn.setMedico(medicoDto);
+            MedicoDto medicoDto = new MedicoDto();
+            medicoDto.setId(consultaReturn.getMedico().getId());
+            medicoDto.setNome(consultaReturn.getMedico().getNome());
+            medicoDto.setEspecialidade(consultaReturn.getMedico().getEspecialidade());
 
-        PacienteDto pacienteDto = new PacienteDto();
-        pacienteDto.setId(consultaReturn.getPaciente().getId());
-        pacienteDto.setNome(consultaReturn.getPaciente().getNome());
-        pacienteDto.setPlanoDeSaude(consultaReturn.getPaciente().getPlanoDeSaude());
+            dtoReturn.setMedico(medicoDto);
 
-        dtoReturn.setPaciente(pacienteDto);
+            PacienteDto pacienteDto = new PacienteDto();
+            pacienteDto.setId(consultaReturn.getPaciente().getId());
+            pacienteDto.setNome(consultaReturn.getPaciente().getNome());
+            pacienteDto.setPlanoDeSaude(consultaReturn.getPaciente().getPlanoDeSaude());
 
-        Set<RemedioDto> remediosDto = new HashSet<>();
+            dtoReturn.setPaciente(pacienteDto);
 
-        for (Remedio r : consultaReturn.getRemedios()) {
-            RemedioDto remedioDto = new RemedioDto();
-            remedioDto.setId(r.getId());
-            remedioDto.setNome(remedioService.findById(r.getId()).getNome());
-            remediosDto.add(remedioDto);
+            Set<RemedioDto> remediosDto = new HashSet<>();
+
+            for (Remedio r : consultaReturn.getRemedios()) {
+                RemedioDto remedioDto = new RemedioDto();
+                remedioDto.setId(r.getId());
+                remedioDto.setNome(remedioService.findById(r.getId()).getNome());
+                remediosDto.add(remedioDto);
+            }
+            dtoReturn.setRemedios(remediosDto);
         }
-        dtoReturn.setRemedios(remediosDto);
-
-
-
-
 
         return dtoReturn;
     }

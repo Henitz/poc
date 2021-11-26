@@ -78,28 +78,33 @@ public class PacienteController {
         return pacientesDto;
     }
 
-    @DeleteMapping("/{id}")
-    public PacienteDto delete(@PathVariable Integer id) {
+    @DeleteMapping("/{id}/{accountId}")
+    public PacienteDto delete(@PathVariable Integer id, @PathVariable String accountId) {
 
-        pacienteService.deleteById(id);
-
+        if(pacienteService.findById(id).getAccount().equals(accountService.getAccountByAccountId(accountId))) {
+            pacienteService.deleteById(id);
+        }
         return new PacienteDto();
 
     }
 
-    @PutMapping("/{id}")
-    public PacienteDto alterar(@RequestBody PacienteDto dto, @PathVariable int id) {
+    @PutMapping("/{id}/{accountId}")
+    public PacienteDto alterar(@RequestBody PacienteDto dto, @PathVariable int id, @PathVariable String accountId) {
         Paciente paciente = new Paciente();
         paciente.setId(id);
         paciente.setNome(dto.getNome());
         paciente.setPlanoDeSaude(dto.getPlanoDeSaude());
 
-        Paciente pacienteReturn = pacienteService.save(paciente);
-        PacienteDto dtoReturn = new PacienteDto();
-        dtoReturn.setId(pacienteReturn.getId());
-        dtoReturn.setNome(pacienteReturn.getNome());
-        dtoReturn.setPlanoDeSaude(pacienteReturn.getPlanoDeSaude());
+        Account account = accountService.getAccountByAccountId(accountId);
+        paciente.setAccount(account);
 
+        PacienteDto dtoReturn = new PacienteDto();
+        if(pacienteService.findById(id).getAccount().equals(account)) {
+            Paciente pacienteReturn = pacienteService.save(paciente);
+            dtoReturn.setId(pacienteReturn.getId());
+            dtoReturn.setNome(pacienteReturn.getNome());
+            dtoReturn.setPlanoDeSaude(pacienteReturn.getPlanoDeSaude());
+        }
         return dtoReturn;
     }
 
