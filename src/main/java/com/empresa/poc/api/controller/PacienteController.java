@@ -46,7 +46,7 @@ public class PacienteController {
         return dtoReturn;
     }
 
-    @GetMapping("/{accountId}/{id}")
+    @GetMapping("/{id}/{accountId}")
     public PacienteDto getOne(@PathVariable Integer id, @PathVariable String accountId) {
 
         Paciente saved = pacienteService.findByIdAndAccountAccountId(id, accountId);
