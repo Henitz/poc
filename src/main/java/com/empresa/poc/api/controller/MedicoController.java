@@ -44,7 +44,7 @@ public class MedicoController {
         return dtoReturn;
     }
 
-    @GetMapping("/{accountId}/{id}")
+    @GetMapping("/{id}/{accountId}")
     public MedicoDto um(@PathVariable Integer id, @PathVariable String accountId) {
 
         Medico medicoReturn = medicoService.findByIdAndAccountAccountId(id, accountId);
